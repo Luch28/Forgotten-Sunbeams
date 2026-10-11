@@ -7,7 +7,7 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            Slot, EntityPlayer, ItemStack, Item, 
-//            AchievementList, IInventory
+//            AchievementList, ModLoader, IInventory
 
 public class SlotFurnace extends Slot
 {
@@ -34,6 +34,7 @@ public class SlotFurnace extends Slot
         {
             thePlayer.addStat(AchievementList.cookFish, 1);
         }
+        ModLoader.TakenFromFurnace(thePlayer, itemstack);
         super.onPickupFromSlot(itemstack);
     }
 

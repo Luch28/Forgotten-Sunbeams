@@ -12,7 +12,8 @@ import net.minecraft.server.MinecraftServer;
 //            EntityFish, EntityArrow, EntityFireball, EntitySnowball, 
 //            EntityEgg, EntityItem, EntityMinecart, EntityBoat, 
 //            EntitySquid, IAnimals, EntityTNTPrimed, EntityFallingSand, 
-//            EntityPainting, Entity, WorldServer, Packet
+//            EntityPainting, ModLoaderMp, Entity, WorldServer, 
+//            Packet
 
 public class EntityTracker
 {
@@ -98,6 +99,7 @@ public class EntityTracker
         {
             trackEntity(entity, 160, 0x7fffffff, false);
         }
+        ModLoaderMp.HandleEntityTrackers(this, entity);
     }
 
     public void trackEntity(Entity entity, int i, int j)

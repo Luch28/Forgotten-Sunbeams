@@ -8,9 +8,9 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            BlockContainer, Material, Block, World, 
-//            TileEntityDispenser, EntityPlayer, ItemStack, Item, 
-//            EntityArrow, EntityEgg, EntitySnowball, EntityItem, 
-//            EntityLiving, MathHelper, IInventory, TileEntity
+//            TileEntityDispenser, EntityPlayer, ItemStack, ModLoader, 
+//            Item, EntityArrow, EntityEgg, EntitySnowball, 
+//            EntityItem, EntityLiving, MathHelper, TileEntity
 
 public class BlockDispenser extends BlockContainer
 {
@@ -130,39 +130,43 @@ public class BlockDispenser extends BlockContainer
             world.func_28097_e(1001, i, j, k, 0);
         } else
         {
-            if(itemstack.itemID == Item.arrow.shiftedIndex)
+            boolean flag = ModLoader.DispenseEntity(world, d, d1, d2, i1, j1, itemstack);
+            if(!flag)
             {
-                EntityArrow entityarrow = new EntityArrow(world, d, d1, d2);
-                entityarrow.setArrowHeading(i1, 0.10000000149011612D, j1, 1.1F, 6F);
-                entityarrow.field_28012_a = true;
-                world.entityJoinedWorld(entityarrow);
-                world.func_28097_e(1002, i, j, k, 0);
-            } else
-            if(itemstack.itemID == Item.egg.shiftedIndex)
-            {
-                EntityEgg entityegg = new EntityEgg(world, d, d1, d2);
-                entityegg.func_20078_a(i1, 0.10000000149011612D, j1, 1.1F, 6F);
-                world.entityJoinedWorld(entityegg);
-                world.func_28097_e(1002, i, j, k, 0);
-            } else
-            if(itemstack.itemID == Item.snowball.shiftedIndex)
-            {
-                EntitySnowball entitysnowball = new EntitySnowball(world, d, d1, d2);
-                entitysnowball.func_6141_a(i1, 0.10000000149011612D, j1, 1.1F, 6F);
-                world.entityJoinedWorld(entitysnowball);
-                world.func_28097_e(1002, i, j, k, 0);
-            } else
-            {
-                EntityItem entityitem = new EntityItem(world, d, d1 - 0.29999999999999999D, d2, itemstack);
-                double d3 = random.nextDouble() * 0.10000000000000001D + 0.20000000000000001D;
-                entityitem.motionX = (double)i1 * d3;
-                entityitem.motionY = 0.20000000298023224D;
-                entityitem.motionZ = (double)j1 * d3;
-                entityitem.motionX += random.nextGaussian() * 0.0074999998323619366D * 6D;
-                entityitem.motionY += random.nextGaussian() * 0.0074999998323619366D * 6D;
-                entityitem.motionZ += random.nextGaussian() * 0.0074999998323619366D * 6D;
-                world.entityJoinedWorld(entityitem);
-                world.func_28097_e(1000, i, j, k, 0);
+                if(itemstack.itemID == Item.arrow.shiftedIndex)
+                {
+                    EntityArrow entityarrow = new EntityArrow(world, d, d1, d2);
+                    entityarrow.setArrowHeading(i1, 0.10000000149011612D, j1, 1.1F, 6F);
+                    entityarrow.field_28012_a = true;
+                    world.entityJoinedWorld(entityarrow);
+                    world.func_28097_e(1002, i, j, k, 0);
+                } else
+                if(itemstack.itemID == Item.egg.shiftedIndex)
+                {
+                    EntityEgg entityegg = new EntityEgg(world, d, d1, d2);
+                    entityegg.func_20078_a(i1, 0.10000000149011612D, j1, 1.1F, 6F);
+                    world.entityJoinedWorld(entityegg);
+                    world.func_28097_e(1002, i, j, k, 0);
+                } else
+                if(itemstack.itemID == Item.snowball.shiftedIndex)
+                {
+                    EntitySnowball entitysnowball = new EntitySnowball(world, d, d1, d2);
+                    entitysnowball.func_6141_a(i1, 0.10000000149011612D, j1, 1.1F, 6F);
+                    world.entityJoinedWorld(entitysnowball);
+                    world.func_28097_e(1002, i, j, k, 0);
+                } else
+                {
+                    EntityItem entityitem = new EntityItem(world, d, d1 - 0.29999999999999999D, d2, itemstack);
+                    double d3 = random.nextDouble() * 0.10000000000000001D + 0.20000000000000001D;
+                    entityitem.motionX = (double)i1 * d3;
+                    entityitem.motionY = 0.20000000298023224D;
+                    entityitem.motionZ = (double)j1 * d3;
+                    entityitem.motionX += random.nextGaussian() * 0.0074999998323619366D * 6D;
+                    entityitem.motionY += random.nextGaussian() * 0.0074999998323619366D * 6D;
+                    entityitem.motionZ += random.nextGaussian() * 0.0074999998323619366D * 6D;
+                    world.entityJoinedWorld(entityitem);
+                    world.func_28097_e(1000, i, j, k, 0);
+                }
             }
             world.func_28097_e(2000, i, j, k, i1 + 1 + (j1 + 1) * 3);
         }

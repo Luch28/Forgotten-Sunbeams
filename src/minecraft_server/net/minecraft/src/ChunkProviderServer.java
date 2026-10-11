@@ -9,7 +9,8 @@ import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
 //            IChunkProvider, EmptyChunk, ChunkCoordIntPair, WorldServer, 
-//            ChunkCoordinates, Chunk, IChunkLoader, IProgressUpdate
+//            ChunkCoordinates, Chunk, IChunkLoader, ModLoader, 
+//            IProgressUpdate
 
 public class ChunkProviderServer
     implements IChunkProvider
@@ -171,6 +172,7 @@ public class ChunkProviderServer
             if(serverChunkGenerator != null)
             {
                 serverChunkGenerator.populate(ichunkprovider, i, j);
+                ModLoader.PopulateChunk(serverChunkGenerator, i << 4, j << 4, world);
                 chunk.setChunkModified();
             }
         }

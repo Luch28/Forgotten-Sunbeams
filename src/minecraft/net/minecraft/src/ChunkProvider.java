@@ -9,7 +9,7 @@ import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
 //            IChunkProvider, EmptyChunk, ChunkCoordIntPair, Chunk, 
-//            IChunkLoader, World, IProgressUpdate
+//            IChunkLoader, World, ModLoader, IProgressUpdate
 
 public class ChunkProvider
     implements IChunkProvider
@@ -152,6 +152,7 @@ public class ChunkProvider
             if(chunkProvider != null)
             {
                 chunkProvider.populate(ichunkprovider, i, j);
+                ModLoader.PopulateChunk(chunkProvider, i, j, field_28066_g);
                 chunk.setChunkModified();
             }
         }
@@ -167,15 +168,14 @@ public class ChunkProvider
             {
                 func_28063_a(chunk);
             }
-            if(!chunk.needsSaving(flag))
+            if(chunk.needsSaving(flag))
             {
-                continue;
-            }
-            func_28062_b(chunk);
-            chunk.isModified = false;
-            if(++i == 24 && !flag)
-            {
-                return false;
+                func_28062_b(chunk);
+                chunk.isModified = false;
+                if(++i == 24 && !flag)
+                {
+                    return false;
+                }
             }
         }
 
@@ -221,7 +221,7 @@ public class ChunkProvider
 
     public String makeString()
     {
-        return (new StringBuilder()).append("ServerChunkCache: ").append(chunkMap.size()).append(" Drop: ").append(droppedChunksSet.size()).toString();
+        return (new StringBuilder("ServerChunkCache: ")).append(chunkMap.size()).append(" Drop: ").append(droppedChunksSet.size()).toString();
     }
 
     private Set droppedChunksSet;

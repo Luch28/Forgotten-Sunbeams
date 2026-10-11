@@ -1,132 +1,106 @@
-package net.minecraft.client.gui;
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.src.forgetten_sunbeams.text.ITextField;
-import net.minecraft.src.forgetten_sunbeams.text.TextFieldEditor;
+package net.minecraft.src;
+
+import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
-public class GuiChat extends GuiScreen implements ITextField {
-   protected String message = "";
-   private int currentIndex = 0;
-   private String originalMessage;
-   private int updateCounter = 0;
-   private final TextFieldEditor editor = new TextFieldEditor(this);
+// Referenced classes of package net.minecraft.src:
+//            GuiScreen, EntityPlayerSP, GuiIngame, ChatAllowedCharacters
 
-   public GuiChat() {
-      this.editor.setCursor(10000);
-   }
+public class GuiChat extends GuiScreen
+{
 
-   public void initGui() {
-      Keyboard.enableRepeatEvents(true);
-   }
+    public GuiChat()
+    {
+        message = "";
+        updateCounter = 0;
+    }
 
-   public void onGuiClosed() {
-      Keyboard.enableRepeatEvents(false);
-      this.mc.ingameGUI.chatScroll = 0;
-   }
+    public void initGui()
+    {
+        Keyboard.enableRepeatEvents(true);
+    }
 
-   public void updateScreen() {
-      ++this.updateCounter;
-      int dWheel = Mouse.getDWheel();
-      if (dWheel != 0) {
-         GuiIngame var10000 = this.mc.ingameGUI;
-         var10000.chatScroll += dWheel / 100;
-      }
+    public void onGuiClosed()
+    {
+        Keyboard.enableRepeatEvents(false);
+    }
 
-   }
+    public void updateScreen()
+    {
+        updateCounter++;
+    }
 
-   public void keyTyped(char c, int key, int mouseX, int mouseY) {
-      if (key == 200 && this.mc.thePlayer.messages.size() > 0) {
-         if (this.currentIndex == 0) {
-            this.originalMessage = this.getText();
-         }
-
-         if (this.currentIndex < this.mc.thePlayer.messages.size()) {
-            ++this.currentIndex;
-            this.setText(this.getMessage(this.currentIndex));
-            this.editor.setCursor(10000);
-         }
-
-      } else {
-         if (key == 208 && this.currentIndex > 0) {
-            if (this.currentIndex - 1 == 0) {
-               --this.currentIndex;
-               this.setText(this.originalMessage);
-               this.editor.setCursor(10000);
-            } else {
-               --this.currentIndex;
-               this.setText(this.getMessage(this.currentIndex));
-               this.editor.setCursor(10000);
+    protected void keyTyped(char c, int i)
+    {
+        if(i == 1)
+        {
+            mc.displayGuiScreen(null);
+            return;
+        }
+        if(i == 28)
+        {
+            String s = message.trim();
+            if(s.length() > 0)
+            {
+                String s1 = message.trim();
+                if(!mc.lineIsCommand(s1))
+                {
+                    mc.thePlayer.sendChatMessage(s1);
+                }
             }
-         }
+            mc.displayGuiScreen(null);
+            return;
+        }
+        if(i == 14 && message.length() > 0)
+        {
+            message = message.substring(0, message.length() - 1);
+        }
+        if(field_20082_i.indexOf(c) >= 0 && message.length() < 100)
+        {
+            message += c;
+        }
+    }
 
-         if (key == 1 && !(this instanceof GuiSleepMP)) {
-            this.mc.displayGuiScreen((GuiScreen)null);
-         } else if (key == 28) {
-            String s = this.message.trim();
-            if (s.length() > 0) {
-               String s1 = this.message.trim();
-               if (!this.mc.lineIsCommand(s1)) {
-                  this.mc.thePlayer.sendChatMessage(s1);
-               }
-            }
+    public void drawScreen(int i, int j, float f)
+    {
+        drawRect(2, height - 14, width - 2, height - 2, 0x80000000);
+        drawString(fontRenderer, (new StringBuilder()).append("> ").append(message).append((updateCounter / 6) % 2 != 0 ? "" : "_").toString(), 4, height - 12, 0xe0e0e0);
+        super.drawScreen(i, j, f);
+    }
 
-            this.mc.displayGuiScreen((GuiScreen)null);
-         } else {
-            this.editor.handleInput(key, c);
-         }
-      }
-   }
+    protected void mouseClicked(int i, int j, int k)
+    {
+        if(k != 0)
+        {
+            return;
+        }
+        if(mc.ingameGUI.field_933_a == null)
+        {
+            super.mouseClicked(i, j, k);
+            return;
+        }
+        if(message.length() > 0 && !message.endsWith(" "))
+        {
+            message += " ";
+        }
+        message += mc.ingameGUI.field_933_a;
+        byte byte0 = 100;
+        if(message.length() > byte0)
+        {
+            message = message.substring(0, byte0);
+        }
+    }
 
-   public void drawScreen(int x, int y, float renderPartialTicks) {
-      this.drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
-      boolean drawCursor = this.updateCounter / 6 % 2 == 0;
-      int cursor = this.editor.getCursor();
-      this.drawString(this.fontRenderer, this.message, 4, this.height - 12, 14737632);
-      if (drawCursor) {
-         int width = this.fontRenderer.getStringWidth(this.message);
-         if (cursor < this.message.length()) {
-            width = this.fontRenderer.getStringWidth(this.message.substring(0, cursor));
-         }
+    protected String message;
+    private int updateCounter;
+    private static final String field_20082_i;
 
-         this.drawString(this.fontRenderer, "_", 4 + width, this.height - 12, 14737632);
-      }
-
-      super.drawScreen(x, y, renderPartialTicks);
-   }
-
-   public void mouseClicked(int x, int y, int button) {
-      if (button == 0) {
-         if (this.mc.ingameGUI.field_933_a == null) {
-            super.mouseClicked(x, y, button);
-         } else {
-            if (this.message.length() > 0 && !this.message.endsWith(" ")) {
-               this.message = this.message + " ";
-            }
-
-            this.message = this.message + this.mc.ingameGUI.field_933_a;
-            int byte0 = 256;
-            if (this.message.length() > byte0) {
-               this.message = this.message.substring(0, byte0);
-            }
-
-         }
-      }
-   }
-
-   public void setText(String text) {
-      this.message = text;
-   }
-
-   public String getText() {
-      return this.message;
-   }
-
-   public int maxLength() {
-      return 256;
-   }
-
-   private String getMessage(int currentIndex) {
-      return (String)this.mc.thePlayer.messages.get(this.mc.thePlayer.messages.size() - currentIndex);
-   }
+    static 
+    {
+        field_20082_i = ChatAllowedCharacters.allowedCharacters;
+    }
 }

@@ -9,7 +9,8 @@ import java.util.Random;
 // Referenced classes of package net.minecraft.src:
 //            Entity, MathHelper, World, Material, 
 //            AxisAlignedBB, Block, NBTTagCompound, ItemStack, 
-//            EntityPlayer, InventoryPlayer, AchievementList, Item
+//            EntityPlayer, InventoryPlayer, AchievementList, Item, 
+//            ModLoader
 
 public class EntityItem extends Entity
 {
@@ -26,9 +27,9 @@ public class EntityItem extends Entity
         setPosition(d, d1, d2);
         item = itemstack;
         rotationYaw = (float)(Math.random() * 360D);
-        motionX = (float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D);
-        motionY = 0.20000000298023224D;
-        motionZ = (float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D);
+        motionX = (float)(Math.random() * 0.20000000298023221D - 0.10000000149011611D);
+        motionY = 0.20000000298023221D;
+        motionZ = (float)(Math.random() * 0.20000000298023221D - 0.10000000149011611D);
     }
 
     protected boolean canTriggerWalking()
@@ -63,7 +64,7 @@ public class EntityItem extends Entity
         motionY -= 0.039999999105930328D;
         if(worldObj.getBlockMaterial(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) == Material.lava)
         {
-            motionY = 0.20000000298023224D;
+            motionY = 0.20000000298023221D;
             motionX = (rand.nextFloat() - rand.nextFloat()) * 0.2F;
             motionZ = (rand.nextFloat() - rand.nextFloat()) * 0.2F;
             worldObj.playSoundAtEntity(this, "random.fizz", 0.4F, 2.0F + rand.nextFloat() * 0.4F);
@@ -148,6 +149,7 @@ public class EntityItem extends Entity
             {
                 entityplayer.triggerAchievement(AchievementList.killCow);
             }
+            ModLoader.OnItemPickup(entityplayer, item);
             worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             entityplayer.onItemPickup(this, i);
             if(item.stackSize <= 0)

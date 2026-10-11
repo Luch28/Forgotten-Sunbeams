@@ -1,18 +1,45 @@
 package net.minecraft.src.forgetten_sunbeams.blocks;
 
+import net.minecraft.src.BlockTrapDoor;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Material;
+import net.minecraft.src.World;
 
-public class GlassTrapDoor {
-	protected void BlockCustomTrapDoor(int id, Material material) {
+public class GlassTrapDoor extends BlockTrapDoor {
+
+    public GlassTrapDoor(int id, Material material) {
         super(id, material);
-        
-        setHardness(3.0F);
-        setResistance(5.0F);
-		setStepSound(soundWoodFootstep);
-        setBlockName("Glass Trap Door");
+        this.setHardness(0.3F);
+        this.setResistance(0.5F);
+        this.setStepSound(soundGlassFootstep);
+    }
+    
+    @Override
+    public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+        boolean activated = super.blockActivated(world, x, y, z, player);
+        if (activated) {
+            world.markBlockNeedsUpdate(x, y, z); 
+        }
+        return activated;
     }
 
-	public int getBlockTextureFromSide(int side) {
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public int getBlockTextureFromSide(int side) {
         return 49; 
+    }
+
+    @Override
+    public int getRenderBlockPass() {
+        return 1;
     }
 }

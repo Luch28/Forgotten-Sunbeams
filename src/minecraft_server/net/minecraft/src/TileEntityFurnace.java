@@ -8,7 +8,8 @@ package net.minecraft.src;
 // Referenced classes of package net.minecraft.src:
 //            TileEntity, IInventory, ItemStack, NBTTagCompound, 
 //            NBTTagList, World, BlockFurnace, FurnaceRecipes, 
-//            Item, Block, Material, EntityPlayer
+//            Item, Block, Material, ModLoader, 
+//            EntityPlayer
 
 public class TileEntityFurnace extends TileEntity
     implements IInventory
@@ -191,8 +192,10 @@ public class TileEntityFurnace extends TileEntity
         if(furnaceItemStacks[2].stackSize < getInventoryStackLimit() && furnaceItemStacks[2].stackSize < furnaceItemStacks[2].getMaxStackSize())
         {
             return true;
+        } else
+        {
+            return furnaceItemStacks[2].stackSize < itemstack.getMaxStackSize();
         }
-        return furnaceItemStacks[2].stackSize < itemstack.getMaxStackSize();
     }
 
     public void smeltItem()
@@ -239,8 +242,10 @@ public class TileEntityFurnace extends TileEntity
         if(i == Item.bucketLava.shiftedIndex)
         {
             return 20000;
+        } else
+        {
+            return i == Block.sapling.blockID ? 100 : ModLoader.AddAllFuel(i);
         }
-        return i != Block.sapling.blockID ? 0 : 100;
     }
 
     public boolean canInteractWith(EntityPlayer entityplayer)
@@ -248,8 +253,10 @@ public class TileEntityFurnace extends TileEntity
         if(worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) != this)
         {
             return false;
+        } else
+        {
+            return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
         }
-        return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
     }
 
     private ItemStack furnaceItemStacks[];

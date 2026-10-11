@@ -4,18 +4,21 @@
 
 package net.minecraft.src;
 
+import java.lang.reflect.Field;
 import java.util.*;
+import java.util.logging.Logger;
 
 // Referenced classes of package net.minecraft.src:
 //            Entity, MathHelper, Packet34EntityTeleport, Packet33RelEntityMoveLook, 
-//            Packet31RelEntityMove, Packet32EntityLook, Packet28EntityVelocity, DataWatcher, 
-//            Packet40EntityMetadata, EntityPlayerMP, NetServerHandler, Packet29DestroyEntity, 
-//            Packet5PlayerInventory, EntityPlayer, Packet17Sleep, EntityItem, 
-//            Packet21PickupSpawn, Packet20NamedEntitySpawn, EntityMinecart, Packet23VehicleSpawn, 
-//            EntityBoat, IAnimals, Packet24MobSpawn, EntityLiving, 
-//            EntityFish, EntityArrow, EntitySnowball, EntityFireball, 
-//            EntityEgg, EntityTNTPrimed, EntityFallingSand, Block, 
-//            EntityPainting, Packet25EntityPainting, Packet
+//            Packet31RelEntityMove, Packet32EntityLook, Packet28EntityVelocity, Packet, 
+//            DataWatcher, Packet40EntityMetadata, EntityPlayerMP, NetServerHandler, 
+//            Packet29DestroyEntity, Packet5PlayerInventory, EntityPlayer, Packet17Sleep, 
+//            ModLoaderMp, ISpawnable, Packet230ModLoader, EntityTrackerEntry2, 
+//            Packet23VehicleSpawn, ModLoader, EntityItem, Packet21PickupSpawn, 
+//            Packet20NamedEntitySpawn, EntityMinecart, EntityBoat, IAnimals, 
+//            Packet24MobSpawn, EntityLiving, EntityFish, EntityArrow, 
+//            EntitySnowball, EntityFireball, EntityEgg, EntityTNTPrimed, 
+//            EntityFallingSand, Block, EntityPainting, Packet25EntityPainting
 
 public class EntityTrackerEntry
 {
@@ -117,7 +120,7 @@ public class EntityTrackerEntry
             }
             if(obj != null)
             {
-                sendPacketToTrackedPlayers(((Packet) (obj)));
+                sendPacketToTrackedPlayers((Packet)obj);
             }
             DataWatcher datawatcher = trackedEntity.getDataWatcher();
             if(datawatcher.hasObjectChanged())
@@ -230,6 +233,49 @@ public class EntityTrackerEntry
 
     private Packet getSpawnPacket()
     {
+        EntityTrackerEntry2 entitytrackerentry2 = ModLoaderMp.HandleEntityTrackerEntries(trackedEntity);
+        if(entitytrackerentry2 != null)
+        {
+            try
+            {
+                if(trackedEntity instanceof ISpawnable)
+                {
+                    Packet230ModLoader packet230modloader = ((ISpawnable)trackedEntity).getSpawnPacket();
+                    packet230modloader.modId = "Spawn".hashCode();
+                    if(entitytrackerentry2.entityId > 127)
+                    {
+                        packet230modloader.packetType = entitytrackerentry2.entityId - 256;
+                    } else
+                    {
+                        packet230modloader.packetType = entitytrackerentry2.entityId;
+                    }
+                    return packet230modloader;
+                }
+                if(!entitytrackerentry2.entityHasOwner)
+                {
+                    return new Packet23VehicleSpawn(trackedEntity, entitytrackerentry2.entityId);
+                }
+                Field field = trackedEntity.getClass().getField("owner");
+                if((net.minecraft.src.Entity.class).isAssignableFrom(field.getType()))
+                {
+                    Entity entity = (Entity)field.get(trackedEntity);
+                    return new Packet23VehicleSpawn(trackedEntity, entitytrackerentry2.entityId, entity != null ? entity.entityId : trackedEntity.entityId);
+                } else
+                {
+                    throw new Exception(String.format("Entity's owner field must be of type Entity, but it is of type %s.", new Object[] {
+                        field.getType()
+                    }));
+                }
+            }
+            catch(Exception exception)
+            {
+                ModLoader.getLogger().throwing("EntityTrackerEntry", "getSpawnPacket", exception);
+                ModLoader.ThrowException(String.format("Error sending spawn packet for entity of type %s.", new Object[] {
+                    trackedEntity.getClass()
+                }), exception);
+                return null;
+            }
+        }
         if(trackedEntity instanceof EntityItem)
         {
             EntityItem entityitem = (EntityItem)trackedEntity;
