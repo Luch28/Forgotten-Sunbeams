@@ -40,8 +40,11 @@ public class GuiVideoSettings extends GuiScreen
             }
             i++;
         }
-
-        controlList.add(new GuiButton(200, width / 2 - 100, height / 6 + 168, stringtranslate.translateKey("gui.done")));
+        controlList.add(new GuiButton(101, width / 2 - 184, height / 72 + 12, 90, 20, stringtranslate.translateKey("options.video")));
+        controlList.add(new GuiButton(100, width / 2 - 92, height / 72 + 12, 90, 20, stringtranslate.translateKey("options.controls")));
+        controlList.add(new GuiButton(300, width / 2 + 2, height / 72 + 12, 90, 20, "Language"));
+        controlList.add(new GuiButton(0, width / 2 + 94, height / 72 + 12, 90, 20, stringtranslate.translateKey("menu.options")));
+        controlList.add(new GuiButton(200, width / 2 - 100, height - 38, stringtranslate.translateKey("gui.done")));
     }
 
     protected void actionPerformed(GuiButton guibutton)
@@ -55,21 +58,36 @@ public class GuiVideoSettings extends GuiScreen
             guiGameSettings.setOptionValue(((GuiSmallButton)guibutton).returnEnumOptions(), 1);
             guibutton.displayString = guiGameSettings.getKeyBinding(EnumOptions.getEnumOptions(guibutton.id));
         }
-        if(guibutton.id == 200)
-        {
+        else if (guibutton.id == 101) {
             mc.gameSettings.saveOptions();
-            mc.displayGuiScreen(field_22110_h);
+            mc.displayGuiScreen(new GuiVideoSettings(this, this.mc.gameSettings));
         }
+        else if (guibutton.id == 100) {
+            mc.gameSettings.saveOptions();
+            mc.displayGuiScreen(new GuiControls(this, this.mc.gameSettings));
+        }
+        else if (guibutton.id == 200) {
+        	mc.gameSettings.saveOptions();
+        	mc.displayGuiScreen(null);
+        }
+        else if (guibutton.id == 300)
+        {
+            mc.displayGuiScreen(new GuiLanguage(this));
+        }
+        
         ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int i = scaledresolution.getScaledWidth();
         int j = scaledresolution.getScaledHeight();
         setWorldAndResolution(mc, i, j);
     }
 
+    @Override
     public void drawScreen(int i, int j, float f)
     {
         drawDefaultBackground();
-        drawCenteredString(fontRenderer, field_22107_a, width / 2, 20, 0xffffff);
+        drawGradientRect(0, 0, width, 38, 0xCC101010, 0xCC101010);
+        drawGradientRect(0, height - 48, width, height, 0xCC101010, 0xCC101010);
+        drawCenteredString(fontRenderer, null, width / 2, 20, 0xffffff);
         super.drawScreen(i, j, f);
     }
 
