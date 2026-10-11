@@ -9,7 +9,7 @@ import net.minecraft.src.forgetten_sunbeams.blocks.*;
 
 public class mod_main extends BaseMod {
 
-    public static final Block glassTrapDoor = new GlassTrapDoor(160, Material.glass)
+    public static final Block glassTrapDoor = new GlassTrapDoor(100, Material.glass)
             .setBlockName("glassTrapDoor");
 
     @Override
