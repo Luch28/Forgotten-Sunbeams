@@ -8,6 +8,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.PrintStream;
 import net.minecraft.src.*;
+import net.minecraft.src.forgetten_sunbeams.serverlist.GuiConnecting;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.*;
 import org.lwjgl.opengl.*;
@@ -185,6 +187,7 @@ public abstract class Minecraft
         catch(Exception exception1) { }
         checkGLError("Post startup");
         ingameGUI = new GuiIngame(this);
+        net.minecraft.src.forgetten_sunbeams.ForgottenSunbeams.init();
         if(serverName != null)
         {
             displayGuiScreen(new GuiConnecting(this, serverName, serverPort));
@@ -1667,7 +1670,7 @@ public abstract class Minecraft
     public SoundManager sndManager;
     public MouseHelper mouseHelper;
     public TexturePackList texturePackList;
-    private File mcDataDir;
+    public File mcDataDir;
     private ISaveFormat saveLoader;
     public static long frameTimes[] = new long[512];
     public static long tickTimes[] = new long[512];

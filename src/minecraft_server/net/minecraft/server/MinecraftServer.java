@@ -27,7 +27,6 @@ import net.minecraft.src.EntityTracker;
 import net.minecraft.src.ICommandListener;
 import net.minecraft.src.ISaveFormat;
 import net.minecraft.src.IUpdatePlayerListBox;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.NetworkListenThread;
 import net.minecraft.src.Packet4UpdateTime;
 import net.minecraft.src.PropertyManager;
@@ -69,7 +68,7 @@ public class MinecraftServer
         threadcommandreader.setDaemon(true);
         threadcommandreader.start();
         ConsoleLogManager.init();
-        ModLoader.Init(this);
+        net.minecraft.src.forgetten_sunbeams.ForgottenSunbeams.init();
         logger.info("Starting minecraft server version Beta 1.7.3");
         if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
         {
@@ -250,43 +249,62 @@ label0:
 
     public void run()
     {
-        if(startServer())
+        try
         {
-            long l = System.currentTimeMillis();
-            long l1 = 0L;
-            while(serverRunning) 
+            if(startServer())
             {
-                ModLoader.OnTick(this);
-                long l2 = System.currentTimeMillis();
-                long l3 = l2 - l;
-                if(l3 > 2000L)
+                long l = System.currentTimeMillis();
+                long l1 = 0L;
+                while(serverRunning) 
                 {
-                    logger.warning("Can't keep up! Did the system time change, or is the server overloaded?");
-                    l3 = 2000L;
-                }
-                if(l3 < 0L)
-                {
-                    logger.warning("Time ran backwards! Did the system time change?");
-                    l3 = 0L;
-                }
-                l1 += l3;
-                l = l2;
-                if(worldMngr[0].isAllPlayersFullyAsleep())
-                {
-                    doTick();
-                    l1 = 0L;
-                } else
-                {
-                    while(l1 > 50L) 
+                    long l2 = System.currentTimeMillis();
+                    long l3 = l2 - l;
+                    if(l3 > 2000L)
                     {
-                        l1 -= 50L;
+                        logger.warning("Can't keep up! Did the system time change, or is the server overloaded?");
+                        l3 = 2000L;
+                    }
+                    if(l3 < 0L)
+                    {
+                        logger.warning("Time ran backwards! Did the system time change?");
+                        l3 = 0L;
+                    }
+                    l1 += l3;
+                    l = l2;
+                    if(worldMngr[0].isAllPlayersFullyAsleep())
+                    {
                         doTick();
+                        l1 = 0L;
+                    } else
+                    {
+                        while(l1 > 50L) 
+                        {
+                            l1 -= 50L;
+                            doTick();
+                        }
+                    }
+                    Thread.sleep(1L);
+                }
+            } else
+            {
+                while(serverRunning) 
+                {
+                    commandLineParser();
+                    try
+                    {
+                        Thread.sleep(10L);
+                    }
+                    catch(InterruptedException interruptedexception)
+                    {
+                        interruptedexception.printStackTrace();
                     }
                 }
-                Thread.sleep(1L);
             }
-        } else
+        }
+        catch(Throwable throwable1)
         {
+            throwable1.printStackTrace();
+            logger.log(Level.SEVERE, "Unexpected exception", throwable1);
             while(serverRunning) 
             {
                 commandLineParser();
@@ -294,20 +312,14 @@ label0:
                 {
                     Thread.sleep(10L);
                 }
-                catch(InterruptedException interruptedexception)
+                catch(InterruptedException interruptedexception1)
                 {
-                    interruptedexception.printStackTrace();
+                    interruptedexception1.printStackTrace();
                 }
             }
         }
-        try
+        finally
         {
-            stopServer();
-            serverStopped = true;
-        }
-        catch(Throwable throwable1)
-        {
-            throwable1.printStackTrace();
             try
             {
                 stopServer();
@@ -321,148 +333,7 @@ label0:
             {
                 System.exit(0);
             }
-            break MISSING_BLOCK_LABEL_653;
         }
-        try
-        {
-            stopServer();
-            serverStopped = true;
-        }
-        catch(Throwable throwable)
-        {
-            throwable.printStackTrace();
-        }
-        finally
-        {
-            System.exit(0);
-        }
-        break MISSING_BLOCK_LABEL_653;
-        Exception exception2;
-        exception2;
-        try
-        {
-            stopServer();
-            serverStopped = true;
-        }
-        catch(Throwable throwable7)
-        {
-            throwable7.printStackTrace();
-        }
-        finally
-        {
-            System.exit(0);
-        }
-        throw exception2;
-        Throwable throwable3;
-        throwable3;
-        throwable3.printStackTrace();
-        logger.log(Level.SEVERE, "Unexpected exception", throwable3);
-        while(serverRunning) 
-        {
-            commandLineParser();
-            try
-            {
-                Thread.sleep(10L);
-            }
-            catch(InterruptedException interruptedexception1)
-            {
-                interruptedexception1.printStackTrace();
-            }
-        }
-        try
-        {
-            stopServer();
-            serverStopped = true;
-        }
-        catch(Throwable throwable5)
-        {
-            throwable5.printStackTrace();
-            try
-            {
-                stopServer();
-                serverStopped = true;
-            }
-            catch(Throwable throwable6)
-            {
-                throwable6.printStackTrace();
-            }
-            finally
-            {
-                System.exit(0);
-            }
-            break MISSING_BLOCK_LABEL_653;
-        }
-        try
-        {
-            stopServer();
-            serverStopped = true;
-        }
-        catch(Throwable throwable4)
-        {
-            throwable4.printStackTrace();
-        }
-        finally
-        {
-            System.exit(0);
-        }
-        break MISSING_BLOCK_LABEL_653;
-        Exception exception6;
-        exception6;
-        try
-        {
-            stopServer();
-            serverStopped = true;
-        }
-        catch(Throwable throwable8)
-        {
-            throwable8.printStackTrace();
-        }
-        finally
-        {
-            System.exit(0);
-        }
-        throw exception6;
-        Exception exception8;
-        exception8;
-        try
-        {
-            stopServer();
-            serverStopped = true;
-        }
-        catch(Throwable throwable9)
-        {
-            throwable9.printStackTrace();
-            try
-            {
-                stopServer();
-                serverStopped = true;
-            }
-            catch(Throwable throwable10)
-            {
-                throwable10.printStackTrace();
-            }
-            finally
-            {
-                System.exit(0);
-            }
-        }
-        finally
-        {
-            try
-            {
-                stopServer();
-                serverStopped = true;
-            }
-            catch(Throwable throwable11)
-            {
-                throwable11.printStackTrace();
-            }
-            finally
-            {
-                System.exit(0);
-            }
-        }
-        throw exception8;
     }
 
     private void doTick()

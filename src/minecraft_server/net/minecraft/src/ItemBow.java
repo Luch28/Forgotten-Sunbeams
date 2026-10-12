@@ -1,34 +1,51 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
-
 package net.minecraft.src;
 
-import java.util.Random;
+import net.minecraft.src.forgetten_sunbeams.items.Quiver;
 
-// Referenced classes of package net.minecraft.src:
-//            Item, EntityPlayer, InventoryPlayer, World, 
-//            EntityArrow, ItemStack
+public class ItemBow extends Item {
 
-public class ItemBow extends Item
-{
-
-    public ItemBow(int i)
-    {
+    public ItemBow(int i) {
         super(i);
-        maxStackSize = 1;
+        this.maxStackSize = 1;
     }
 
-    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
-    {
-        if(entityplayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex))
-        {
-            world.playSoundAtEntity(entityplayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
-            if(!world.singleplayerWorld)
-            {
+    @Override
+    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+        if (entityplayer == null || entityplayer.inventory == null) return itemstack;
+
+        if (!world.singleplayerWorld) {
+            boolean hasQuiverArrow = Quiver.consumeArrow(entityplayer);
+            boolean hasRegularArrow = false;
+
+            if (!hasQuiverArrow) {
+                hasRegularArrow = entityplayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex);
+            }
+
+            if (hasQuiverArrow || hasRegularArrow) {
+                world.playSoundAtEntity(entityplayer, "random.bow", 1.0F,
+                    1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
                 world.entityJoinedWorld(new EntityArrow(world, entityplayer));
             }
+        } else {
+            boolean hasQuiverArrow = Quiver.getArrows(Quiver.getQuiver(entityplayer)) > 0;
+            boolean hasRegularArrow = hasArrowInInventory(entityplayer);
+
+            if (hasQuiverArrow || hasRegularArrow) {
+                world.playSoundAtEntity(entityplayer, "random.bow", 1.0F,
+                    1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
+            }
         }
+
         return itemstack;
+    }
+
+    private static boolean hasArrowInInventory(EntityPlayer player) {
+        for (int i = 0; i < player.inventory.mainInventory.length; i++) {
+            ItemStack stack = player.inventory.mainInventory[i];
+            if (stack != null && stack.itemID == Item.arrow.shiftedIndex) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -123,4 +123,7 @@ public class GuiTextField extends Gui
     public boolean isFocused;
     public boolean isEnabled;
     private GuiScreen parentGuiScreen;
+	public boolean getIsFocused() {
+		return false;
+	}
 }

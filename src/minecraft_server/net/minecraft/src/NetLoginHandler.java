@@ -15,7 +15,7 @@ import net.minecraft.server.MinecraftServer;
 //            Packet1Login, ThreadLoginVerifier, ServerConfigurationManager, EntityPlayerMP, 
 //            WorldServer, NetServerHandler, WorldProvider, Packet6SpawnPosition, 
 //            ChunkCoordinates, Packet3Chat, NetworkListenThread, Packet4UpdateTime, 
-//            ModLoaderMp, Packet
+//            Packet
 
 public class NetLoginHandler extends NetHandler
 {
@@ -119,7 +119,6 @@ public class NetLoginHandler extends NetHandler
             mcServer.networkServer.addPlayer(netserverhandler);
             netserverhandler.sendPacket(new Packet4UpdateTime(worldserver.getWorldTime()));
             entityplayermp.func_20057_k();
-            ModLoaderMp.HandleAllLogins(entityplayermp);
         }
         finishedProcessing = true;
     }

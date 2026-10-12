@@ -2,11 +2,17 @@
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-package net.minecraft.src;
+package net.minecraft.src.forgetten_sunbeams.serverlist;
 
 import java.io.PrintStream;
 import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiMainMenu;
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.NetClientHandler;
+import net.minecraft.src.StringTranslate;
+import net.minecraft.src.ThreadConnectToServer;
 
 // Referenced classes of package net.minecraft.src:
 //            GuiScreen, ThreadConnectToServer, NetClientHandler, StringTranslate, 
@@ -15,15 +21,16 @@ import net.minecraft.client.Minecraft;
 public class GuiConnecting extends GuiScreen
 {
 
-    public GuiConnecting(Minecraft minecraft, String s, int i)
+    public GuiConnecting(Minecraft minecraft, String serverName, int serverPort)
     {
         cancelled = false;
-        System.out.println((new StringBuilder()).append("Connecting to ").append(s).append(", ").append(i).toString());
+        System.out.println((new StringBuilder()).append("Connecting to ").append(serverName).append(", ").append(serverPort).toString());
         minecraft.changeWorld1(null);
-        (new ThreadConnectToServer(this, minecraft, s, i)).start();
+        (new ThreadConnectToServer(this, minecraft, serverName, serverPort)).start();
     }
 
-    public void updateScreen()
+
+	public void updateScreen()
     {
         if(clientHandler != null)
         {
@@ -71,17 +78,17 @@ public class GuiConnecting extends GuiScreen
         super.drawScreen(i, j, f);
     }
 
-    static NetClientHandler setNetClientHandler(GuiConnecting guiconnecting, NetClientHandler netclienthandler)
+    public static NetClientHandler setNetClientHandler(GuiConnecting guiconnecting, NetClientHandler netclienthandler)
     {
         return guiconnecting.clientHandler = netclienthandler;
     }
 
-    static boolean isCancelled(GuiConnecting guiconnecting)
+    public static boolean isCancelled(GuiConnecting guiconnecting)
     {
         return guiconnecting.cancelled;
     }
 
-    static NetClientHandler getNetClientHandler(GuiConnecting guiconnecting)
+    public static NetClientHandler getNetClientHandler(GuiConnecting guiconnecting)
     {
         return guiconnecting.clientHandler;
     }

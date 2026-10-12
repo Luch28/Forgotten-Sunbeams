@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.forgetten_sunbeams.serverlist.GuiMultiplayer;
+
 import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
@@ -104,8 +106,7 @@ public class GuiMainMenu extends GuiScreen
         {
             mc.displayGuiScreen(new GuiSelectWorld(this));
         }
-        if(guibutton.id == 2)
-        {
+        if (guibutton.id == 2) {
             mc.displayGuiScreen(new GuiMultiplayer(this));
         }
         if(guibutton.id == 3)

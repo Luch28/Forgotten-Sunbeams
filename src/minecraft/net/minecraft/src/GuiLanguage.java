@@ -17,8 +17,7 @@ public class GuiLanguage extends GuiScreen {
     private int selectedIndex = -1;
     private File langDir;
     
-    public GuiLanguage(GuiScreen guiscreen, GameSettings gamesettings)
-    {
+    public GuiLanguage(GuiScreen guiscreen, GameSettings gamesettings) {
         parentScreen = guiscreen;
     }
 
@@ -84,8 +83,11 @@ public class GuiLanguage extends GuiScreen {
         try {
             if (langDir.exists() && langDir.isDirectory()) {
                 for (File file : langDir.listFiles()) {
-                    if (file.getName().endsWith(".properties") || file.getName().endsWith(".lang")) {
-                        langFiles.add(file.getName());
+                    String fileName = file.getName();
+                    // ПРОВЕРКА: Показываем только файлы, содержащие "_" и имеющие расширение .lang/.properties
+                    if (fileName.contains("_") && 
+                       (fileName.endsWith(".properties") || fileName.endsWith(".lang"))) {
+                        langFiles.add(fileName);
                     }
                 }
             }
@@ -131,13 +133,11 @@ public class GuiLanguage extends GuiScreen {
                     e.printStackTrace();
                 }
             }
-            else if(guibutton.id == 0)
-            {
+            else if(guibutton.id == 0) {
                 mc.displayGuiScreen(new GuiOptions(this, mc.gameSettings));
             }
         }
     }
-
 
     public void selectLanguage(int index) {
         this.selectedIndex = index;
@@ -152,7 +152,9 @@ public class GuiLanguage extends GuiScreen {
             }
             field.setAccessible(true);
             Properties translateTable = (Properties) field.get(stringtranslate);
-            translateTable.clear();
+            
+            // ВАЖНО: Мы НЕ очищаем таблицу (clear), чтобы сохранить ванильные тексты игры!
+            // translateTable.clear(); 
 
             File fileToLoad = new File(langDir, selectedFile);
             if (fileToLoad.exists()) {
@@ -160,6 +162,10 @@ public class GuiLanguage extends GuiScreen {
                 translateTable.load(new InputStreamReader(is, Charset.forName("UTF-8")));
                 is.close();
             }
+            
+            // Перерисовываем интерфейс, чтобы кнопки обновились на выбранном языке
+            this.initGui();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,7 +175,6 @@ public class GuiLanguage extends GuiScreen {
         this.languageList.drawScreen(i, j, f);
         drawGradientRect(0, 0, width, 38, 0xCC101010, 0xCC101010);
         drawGradientRect(0, height - 48, width, height, 0xCC101010, 0xCC101010);
-        drawCenteredString(fontRenderer, null, width / 2, 20, 0xffffff);
         this.drawCenteredString(this.fontRenderer, "Select Language", this.width / 2, 20, 16777215);
         super.drawScreen(i, j, f);
     }

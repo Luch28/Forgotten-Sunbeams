@@ -9,9 +9,9 @@ import java.util.Random;
 // Referenced classes of package net.minecraft.src:
 //            BlockContainer, Material, Block, World, 
 //            IBlockAccess, TileEntityDispenser, EntityPlayer, ItemStack, 
-//            ModLoader, Item, EntityArrow, EntityEgg, 
-//            EntitySnowball, EntityItem, Entity, EntityLiving, 
-//            MathHelper, TileEntity
+//            Item, EntityArrow, EntityEgg, EntitySnowball, 
+//            EntityItem, EntityLiving, MathHelper, IInventory, 
+//            TileEntity
 
 public class BlockDispenser extends BlockContainer
 {
@@ -151,43 +151,39 @@ public class BlockDispenser extends BlockContainer
             world.func_28106_e(1001, i, j, k, 0);
         } else
         {
-            boolean flag = ModLoader.DispenseEntity(world, d, d1, d2, i1, j1, itemstack);
-            if(!flag)
+            if(itemstack.itemID == Item.arrow.shiftedIndex)
             {
-                if(itemstack.itemID == Item.arrow.shiftedIndex)
-                {
-                    EntityArrow entityarrow = new EntityArrow(world, d, d1, d2);
-                    ((EntityArrow)entityarrow).setArrowHeading(i1, 0.10000000149011611D, j1, 1.1F, 6F);
-                    ((EntityArrow)entityarrow).doesArrowBelongToPlayer = true;
-                    world.entityJoinedWorld(entityarrow);
-                    world.func_28106_e(1002, i, j, k, 0);
-                } else
-                if(itemstack.itemID == Item.egg.shiftedIndex)
-                {
-                    EntityEgg entityegg = new EntityEgg(world, d, d1, d2);
-                    ((EntityEgg)entityegg).setEggHeading(i1, 0.10000000149011611D, j1, 1.1F, 6F);
-                    world.entityJoinedWorld(entityegg);
-                    world.func_28106_e(1002, i, j, k, 0);
-                } else
-                if(itemstack.itemID == Item.snowball.shiftedIndex)
-                {
-                    EntitySnowball entitysnowball = new EntitySnowball(world, d, d1, d2);
-                    ((EntitySnowball)entitysnowball).setSnowballHeading(i1, 0.10000000149011611D, j1, 1.1F, 6F);
-                    world.entityJoinedWorld(entitysnowball);
-                    world.func_28106_e(1002, i, j, k, 0);
-                } else
-                {
-                    EntityItem entityitem = new EntityItem(world, d, d1 - 0.29999999999999999D, d2, itemstack);
-                    double d3 = random.nextDouble() * 0.10000000000000001D + 0.20000000000000001D;
-                    entityitem.motionX = (double)i1 * d3;
-                    entityitem.motionY = 0.20000000298023221D;
-                    entityitem.motionZ = (double)j1 * d3;
-                    entityitem.motionX += random.nextGaussian() * 0.0074999998323619366D * 6D;
-                    entityitem.motionY += random.nextGaussian() * 0.0074999998323619366D * 6D;
-                    entityitem.motionZ += random.nextGaussian() * 0.0074999998323619366D * 6D;
-                    world.entityJoinedWorld(entityitem);
-                    world.func_28106_e(1000, i, j, k, 0);
-                }
+                EntityArrow entityarrow = new EntityArrow(world, d, d1, d2);
+                entityarrow.setArrowHeading(i1, 0.10000000149011612D, j1, 1.1F, 6F);
+                entityarrow.doesArrowBelongToPlayer = true;
+                world.entityJoinedWorld(entityarrow);
+                world.func_28106_e(1002, i, j, k, 0);
+            } else
+            if(itemstack.itemID == Item.egg.shiftedIndex)
+            {
+                EntityEgg entityegg = new EntityEgg(world, d, d1, d2);
+                entityegg.setEggHeading(i1, 0.10000000149011612D, j1, 1.1F, 6F);
+                world.entityJoinedWorld(entityegg);
+                world.func_28106_e(1002, i, j, k, 0);
+            } else
+            if(itemstack.itemID == Item.snowball.shiftedIndex)
+            {
+                EntitySnowball entitysnowball = new EntitySnowball(world, d, d1, d2);
+                entitysnowball.setSnowballHeading(i1, 0.10000000149011612D, j1, 1.1F, 6F);
+                world.entityJoinedWorld(entitysnowball);
+                world.func_28106_e(1002, i, j, k, 0);
+            } else
+            {
+                EntityItem entityitem = new EntityItem(world, d, d1 - 0.29999999999999999D, d2, itemstack);
+                double d3 = random.nextDouble() * 0.10000000000000001D + 0.20000000000000001D;
+                entityitem.motionX = (double)i1 * d3;
+                entityitem.motionY = 0.20000000298023224D;
+                entityitem.motionZ = (double)j1 * d3;
+                entityitem.motionX += random.nextGaussian() * 0.0074999998323619366D * 6D;
+                entityitem.motionY += random.nextGaussian() * 0.0074999998323619366D * 6D;
+                entityitem.motionZ += random.nextGaussian() * 0.0074999998323619366D * 6D;
+                world.entityJoinedWorld(entityitem);
+                world.func_28106_e(1000, i, j, k, 0);
             }
             world.func_28106_e(2000, i, j, k, i1 + 1 + (j1 + 1) * 3);
         }
@@ -242,30 +238,36 @@ public class BlockDispenser extends BlockContainer
     public void onBlockRemoval(World world, int i, int j, int k)
     {
         TileEntityDispenser tileentitydispenser = (TileEntityDispenser)world.getBlockTileEntity(i, j, k);
+label0:
         for(int l = 0; l < tileentitydispenser.getSizeInventory(); l++)
         {
             ItemStack itemstack = tileentitydispenser.getStackInSlot(l);
-            if(itemstack != null)
+            if(itemstack == null)
             {
-                float f = random.nextFloat() * 0.8F + 0.1F;
-                float f1 = random.nextFloat() * 0.8F + 0.1F;
-                float f2 = random.nextFloat() * 0.8F + 0.1F;
-                while(itemstack.stackSize > 0) 
-                {
-                    int i1 = random.nextInt(21) + 10;
-                    if(i1 > itemstack.stackSize)
-                    {
-                        i1 = itemstack.stackSize;
-                    }
-                    itemstack.stackSize -= i1;
-                    EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
-                    float f3 = 0.05F;
-                    entityitem.motionX = (float)random.nextGaussian() * f3;
-                    entityitem.motionY = (float)random.nextGaussian() * f3 + 0.2F;
-                    entityitem.motionZ = (float)random.nextGaussian() * f3;
-                    world.entityJoinedWorld(entityitem);
-                }
+                continue;
             }
+            float f = random.nextFloat() * 0.8F + 0.1F;
+            float f1 = random.nextFloat() * 0.8F + 0.1F;
+            float f2 = random.nextFloat() * 0.8F + 0.1F;
+            do
+            {
+                if(itemstack.stackSize <= 0)
+                {
+                    continue label0;
+                }
+                int i1 = random.nextInt(21) + 10;
+                if(i1 > itemstack.stackSize)
+                {
+                    i1 = itemstack.stackSize;
+                }
+                itemstack.stackSize -= i1;
+                EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
+                float f3 = 0.05F;
+                entityitem.motionX = (float)random.nextGaussian() * f3;
+                entityitem.motionY = (float)random.nextGaussian() * f3 + 0.2F;
+                entityitem.motionZ = (float)random.nextGaussian() * f3;
+                world.entityJoinedWorld(entityitem);
+            } while(true);
         }
 
         super.onBlockRemoval(world, i, j, k);

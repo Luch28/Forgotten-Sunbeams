@@ -7,9 +7,8 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            TileEntity, IInventory, ItemStack, NBTTagCompound, 
-//            NBTTagList, World, Item, BlockFurnace, 
-//            FurnaceRecipes, Block, Material, ModLoader, 
-//            EntityPlayer
+//            NBTTagList, World, BlockFurnace, FurnaceRecipes, 
+//            Item, Block, Material, EntityPlayer
 
 public class TileEntityFurnace extends TileEntity
     implements IInventory
@@ -151,13 +150,7 @@ public class TileEntityFurnace extends TileEntity
                     flag1 = true;
                     if(furnaceItemStacks[1] != null)
                     {
-                        if(furnaceItemStacks[1].getItem().hasContainerItem())
-                        {
-                            furnaceItemStacks[1] = new ItemStack(furnaceItemStacks[1].getItem().getContainerItem());
-                        } else
-                        {
-                            furnaceItemStacks[1].stackSize--;
-                        }
+                        furnaceItemStacks[1].stackSize--;
                         if(furnaceItemStacks[1].stackSize == 0)
                         {
                             furnaceItemStacks[1] = null;
@@ -229,15 +222,9 @@ public class TileEntityFurnace extends TileEntity
         } else
         if(furnaceItemStacks[2].itemID == itemstack.itemID)
         {
-            furnaceItemStacks[2].stackSize += itemstack.stackSize;
+            furnaceItemStacks[2].stackSize++;
         }
-        if(furnaceItemStacks[0].getItem().hasContainerItem())
-        {
-            furnaceItemStacks[0] = new ItemStack(furnaceItemStacks[0].getItem().getContainerItem());
-        } else
-        {
-            furnaceItemStacks[0].stackSize--;
-        }
+        furnaceItemStacks[0].stackSize--;
         if(furnaceItemStacks[0].stackSize <= 0)
         {
             furnaceItemStacks[0] = null;
@@ -267,13 +254,7 @@ public class TileEntityFurnace extends TileEntity
         {
             return 20000;
         }
-        if(i == Block.sapling.blockID)
-        {
-            return 100;
-        } else
-        {
-            return ModLoader.AddAllFuel(i);
-        }
+        return i != Block.sapling.blockID ? 0 : 100;
     }
 
     public boolean canInteractWith(EntityPlayer entityplayer)

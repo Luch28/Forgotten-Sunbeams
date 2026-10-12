@@ -11,7 +11,7 @@ public class GlassTrapDoor extends BlockTrapDoor {
         super(id, material);
         this.setHardness(0.3F);
         this.setResistance(0.5F);
-        this.setStepSound(soundGlassFootstep); 
+        this.setStepSound(soundGlassFootstep);
     }
     
     @Override
@@ -21,5 +21,23 @@ public class GlassTrapDoor extends BlockTrapDoor {
             world.markBlockNeedsUpdate(x, y, z); 
         }
         return activated;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public int getBlockTextureFromSide(int side) {
+        return 49; 
+    }
+
+    public int getRenderBlockPass() {
+        return 1;
     }
 }

@@ -24,9 +24,9 @@ import org.lwjgl.opengl.GL11;
 //            EntityItem, RenderItem, EntityTNTPrimed, RenderTNTPrimed, 
 //            EntityFallingSand, RenderFallingSand, EntityMinecart, RenderMinecart, 
 //            EntityBoat, RenderBoat, EntityFish, RenderFish, 
-//            EntityLightningBolt, RenderLightningBolt, ModLoader, Render, 
-//            MathHelper, World, Block, FontRenderer, 
-//            RenderEngine, ItemRenderer, GameSettings
+//            EntityLightningBolt, RenderLightningBolt, Render, MathHelper, 
+//            World, Block, FontRenderer, RenderEngine, 
+//            ItemRenderer, GameSettings
 
 public class RenderManager
 {
@@ -62,7 +62,6 @@ public class RenderManager
         entityRenderMap.put(net.minecraft.src.EntityBoat.class, new RenderBoat());
         entityRenderMap.put(net.minecraft.src.EntityFish.class, new RenderFish());
         entityRenderMap.put(net.minecraft.src.EntityLightningBolt.class, new RenderLightningBolt());
-        ModLoader.AddAllRenderers(entityRenderMap);
         Render render;
         for(Iterator iterator = entityRenderMap.values().iterator(); iterator.hasNext(); render.setRenderManager(this))
         {

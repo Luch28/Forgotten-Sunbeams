@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.forgetten_sunbeams.items.Quiver;
+
 import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
@@ -142,7 +144,6 @@ public class GuiIngame extends Gui
                         drawTexturedModalRect((k / 2 - 91) + l5 * 8, l - 32 - 9, 25, 18, 9, 9);
                     }
                 }
-
             }
         }
         GL11.glDisable(3042 /*GL_BLEND*/);
@@ -274,6 +275,32 @@ public class GuiIngame extends Gui
         GL11.glPopMatrix();
         GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
         GL11.glDisable(3042 /*GL_BLEND*/);
+        
+        ItemStack chest = this.mc.thePlayer.inventory.armorInventory[2];
+        if (chest != null && chest.getItem() instanceof net.minecraft.src.forgetten_sunbeams.items.Quiver) {
+            int arrows = net.minecraft.src.forgetten_sunbeams.items.Quiver.getArrows(chest);
+
+            ScaledResolution sr = new ScaledResolution(
+                this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+            int sw = sr.getScaledWidth();
+            int sh = sr.getScaledHeight();
+
+            int barX = (sw + 75) / 2;
+            int barY = sh - 22;
+            int iconX = barX;
+            int iconY = barY - 20;
+
+            int tex = this.mc.renderEngine.getTexture("/gui/items.png");
+            this.mc.renderEngine.bindTexture(tex);
+            int u = (38 % 16) * 16;
+            int v = (38 / 16) * 16;
+            this.drawTexturedModalRect(iconX, iconY, u, v, 16, 16);
+
+            this.mc.fontRenderer.drawStringWithShadow(
+                arrows + " / " + net.minecraft.src.forgetten_sunbeams.items.Quiver.MAX_CAPACITY,
+                iconX + 20, iconY + 4, 0xFFFFFF
+            );
+        }
     }
 
     private void renderPumpkinBlur(int i, int j)

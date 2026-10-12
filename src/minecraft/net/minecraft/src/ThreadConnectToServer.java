@@ -7,15 +7,16 @@ package net.minecraft.src;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.forgetten_sunbeams.serverlist.GuiConnecting;
 
 // Referenced classes of package net.minecraft.src:
 //            NetClientHandler, GuiConnecting, Packet2Handshake, Session, 
 //            GuiConnectFailed
 
-class ThreadConnectToServer extends Thread
+public class ThreadConnectToServer extends Thread
 {
 
-    ThreadConnectToServer(GuiConnecting guiconnecting, Minecraft minecraft, String s, int i)
+    public ThreadConnectToServer(GuiConnecting guiconnecting, Minecraft minecraft, String s, int i)
     {
 //        super();
         connectingGui = guiconnecting;

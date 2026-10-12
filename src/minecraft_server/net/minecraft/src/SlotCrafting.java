@@ -7,7 +7,7 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            Slot, EntityPlayer, ItemStack, Block, 
-//            AchievementList, Item, ModLoader, IInventory
+//            AchievementList, Item, IInventory
 
 public class SlotCrafting extends Slot
 {
@@ -59,7 +59,6 @@ public class SlotCrafting extends Slot
         {
             field_25004_e.addStat(AchievementList.field_27101_r, 1);
         }
-        ModLoader.TakenFromCrafting(field_25004_e, itemstack);
         for(int i = 0; i < craftMatrix.getSizeInventory(); i++)
         {
             ItemStack itemstack1 = craftMatrix.getStackInSlot(i);
