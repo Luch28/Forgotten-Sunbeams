@@ -12,10 +12,10 @@ public class FSItems {
         quiver = new Quiver(300).setItemName("quiver");
         Item.itemsList[300] = quiver;
         
-        dynyaSeeds = new DynyaSeeds(301, FSBlocks.dynyaStem.blockID);
+        dynyaSeeds = new CantaloupeSeeds(301, FSBlocks.dynyaStem.blockID);
         Item.itemsList[301] = dynyaSeeds;
         
-        dynyaSlice = new DynyaSlice(302, 1, false);
+        dynyaSlice = new CantaloupeSlice(302, 1, false);
         Item.itemsList[302] = dynyaSlice;
     }
 }

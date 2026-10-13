@@ -6,9 +6,9 @@ import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.forgetten_sunbeams.FSItems;
 
-public class BlockDynya extends Block {
+public class Cantaloupe extends Block {
 
-    public BlockDynya(int id, int textureIndex) {
+    public Cantaloupe(int id, int textureIndex) {
         super(id, textureIndex, Material.pumpkin);
         this.setHardness(1.0F);
         this.setStepSound(Block.soundWoodFootstep);

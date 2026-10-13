@@ -2,9 +2,9 @@ package net.minecraft.src.forgetten_sunbeams.items;
 
 import net.minecraft.src.ItemFood;
 
-public class DynyaSlice extends ItemFood {
+public class CantaloupeSlice extends ItemFood {
 
-	public DynyaSlice(int id, int healAmount, boolean isWolfsFavorite) {
+	public CantaloupeSlice(int id, int healAmount, boolean isWolfsFavorite) {
 	    super(id, healAmount, isWolfsFavorite);
         this.setItemName("dynyaSlice");
         this.setMaxStackSize(64);

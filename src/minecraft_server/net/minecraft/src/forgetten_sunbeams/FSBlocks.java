@@ -18,7 +18,7 @@ public class FSBlocks {
         Block.blocksList[200] = glassTrapDoor;
         Item.itemsList[200] = new ItemBlock(200 - 256);
         
-        dynya = new BlockDynya(201, 138);
+        dynya = new Cantaloupe(201, 138);
         Block.blocksList[201] = dynya;
         Item.itemsList[201] = new ItemBlock(201 - 256);
         
@@ -26,7 +26,7 @@ public class FSBlocks {
         Block.blocksList[202] = glassDoor;
         Item.itemsList[202] = new ItemBlock(202 - 256);
         
-    	dynyaStem = new BlockDynyaStem(250, 125)
+    	dynyaStem = new CantaloupeStem(250, 125)
         .setBlockName("dynyaStem")
         .setHardness(0.0F);
         Block.blocksList[250] = dynyaStem;

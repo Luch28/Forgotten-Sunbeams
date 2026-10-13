@@ -5,9 +5,9 @@ import net.minecraft.src.*;
 import net.minecraft.src.forgetten_sunbeams.FSBlocks;
 import net.minecraft.src.forgetten_sunbeams.FSItems;
 
-public class BlockDynyaStem extends BlockCrops {
+public class CantaloupeStem extends BlockCrops {
 
-    public BlockDynyaStem(int id, int textureIndex) {
+    public CantaloupeStem(int id, int textureIndex) {
         super(id, textureIndex);
         this.setStepSound(Block.soundGrassFootstep);
         this.setBlockName("dynyaStem");
@@ -70,7 +70,6 @@ public class BlockDynyaStem extends BlockCrops {
         world.setBlockWithNotify(dx, y, dz, FSBlocks.dynya.blockID);
     }
 
-    @Override
     public int getRenderType() {
         return 1;
     }
@@ -80,7 +79,6 @@ public class BlockDynyaStem extends BlockCrops {
         return false;
     }
 
-    @Override
     public boolean renderAsNormalBlock() {
         return false;
     }
@@ -145,6 +143,6 @@ public class BlockDynyaStem extends BlockCrops {
     }
 
     public int colorMultiplier(World world, int x, int y, int z) {
-        return ColorizerGrass.getGrassColor(0.7, 0.8);
+    	return 0x00FF00;
     }
 }

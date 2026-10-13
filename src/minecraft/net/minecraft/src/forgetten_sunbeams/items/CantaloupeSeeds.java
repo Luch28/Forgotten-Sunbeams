@@ -3,11 +3,11 @@ package net.minecraft.src.forgetten_sunbeams.items;
 import net.minecraft.src.*;
 import net.minecraft.src.forgetten_sunbeams.FSBlocks;
 
-public class DynyaSeeds extends Item {
+public class CantaloupeSeeds extends Item {
 
     private int plantedBlockId;
 
-    public DynyaSeeds(int id, int plantedBlockId) {
+    public CantaloupeSeeds(int id, int plantedBlockId) {
         super(id);
         this.plantedBlockId = plantedBlockId;
         this.setMaxStackSize(64);
