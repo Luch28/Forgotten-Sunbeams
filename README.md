@@ -4,4 +4,4 @@
 
 # Forgetten Sunbeams
 
-This is a Minecraft Beta 1.7.3 fork designed to lure players out of the mines and encourage them to build houses and railways, as well as adding a few new features and blocks, custom Gui, train of wagons
+This is a Minecraft Beta 1.7.3 fork designed to lure players out of the mines and encourage them to build houses and railways, as well as adding a few new features and blocks
