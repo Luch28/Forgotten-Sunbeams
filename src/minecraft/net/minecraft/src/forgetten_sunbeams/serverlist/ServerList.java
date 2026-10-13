@@ -12,7 +12,8 @@ public class ServerList {
     private List<ServerData> servers = new ArrayList<ServerData>();
     private File serverListFile;
 
-    public ServerList(net.minecraft.client.Minecraft mc) {
+    @SuppressWarnings("static-access")
+	public ServerList(net.minecraft.client.Minecraft mc) {
         this.serverListFile = new File(mc.getMinecraftDir(), "servers.txt");
         loadServerList();
     }

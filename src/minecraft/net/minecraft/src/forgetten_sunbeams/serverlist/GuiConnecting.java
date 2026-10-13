@@ -4,8 +4,6 @@
 
 package net.minecraft.src.forgetten_sunbeams.serverlist;
 
-import java.io.PrintStream;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiMainMenu;
@@ -42,7 +40,8 @@ public class GuiConnecting extends GuiScreen
     {
     }
 
-    public void initGui()
+    @SuppressWarnings("unchecked")
+	public void initGui()
     {
         StringTranslate stringtranslate = StringTranslate.getInstance();
         controlList.clear();

@@ -1,15 +1,14 @@
 package net.minecraft.src.forgetten_sunbeams.serverlist;
 
-import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Date;
 
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
-import net.minecraft.src.forgetten_sunbeams.serverlist.ServerList.ServerData;
 
 public class GuiMultiplayer extends GuiScreen {
-    private GuiScreen parentScreen;
+    @SuppressWarnings("unused")
+	private GuiScreen parentScreen;
     private ServerList serverList;
     private int selectedServer = -1;
     private GuiButton buttonEdit;
@@ -24,7 +23,8 @@ public class GuiMultiplayer extends GuiScreen {
         this.parentScreen = parentScreen;
     }
 
-    public void initGui() {
+    @SuppressWarnings("unchecked")
+	public void initGui() {
         serverList = new ServerList(mc);
         serverList.loadServerList();
         controlList.clear();

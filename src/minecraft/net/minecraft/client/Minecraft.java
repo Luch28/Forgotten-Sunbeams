@@ -1122,9 +1122,12 @@ public abstract class Minecraft
                             {
                                 thePlayer.dropCurrentItem();
                             }
-                            if(isMultiplayerWorld() && Keyboard.getEventKey() == gameSettings.keyBindChat.keyCode)
+                            if (Keyboard.getEventKey() == gameSettings.keyBindChat.keyCode)
                             {
                                 displayGuiScreen(new GuiChat());
+                            }
+                            if (Keyboard.getEventKey() == 53) {
+                                displayGuiScreen(new GuiChat("/"));
                             }
                         }
                         for(int i = 0; i < 9; i++)

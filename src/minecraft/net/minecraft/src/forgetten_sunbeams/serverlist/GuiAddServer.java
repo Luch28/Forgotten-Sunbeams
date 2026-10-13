@@ -13,7 +13,8 @@ public class GuiAddServer extends GuiScreen {
         this.parentScreen = parentScreen;
     }
 
-    public void initGui() {
+    @SuppressWarnings("unchecked")
+	public void initGui() {
         controlList.clear();
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 12, "Add"));
         controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, "Cancel"));

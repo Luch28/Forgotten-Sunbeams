@@ -4,7 +4,6 @@
 
 package net.minecraft.src;
 
-import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 // Referenced classes of package net.minecraft.src:
@@ -16,6 +15,11 @@ public class GuiChat extends GuiScreen
     public GuiChat()
     {
         message = "";
+        updateCounter = 0;
+    }
+
+    public GuiChat(String initialText) {
+        message = initialText;
         updateCounter = 0;
     }
 
@@ -68,7 +72,7 @@ public class GuiChat extends GuiScreen
     public void drawScreen(int i, int j, float f)
     {
         drawRect(2, height - 14, width - 2, height - 2, 0x80000000);
-        drawString(fontRenderer, (new StringBuilder()).append("> ").append(message).append((updateCounter / 6) % 2 != 0 ? "" : "_").toString(), 4, height - 12, 0xe0e0e0);
+        drawString(fontRenderer, (new StringBuilder()).append("").append(message).append((updateCounter / 6) % 2 != 0 ? "" : "_").toString(), 4, height - 12, 0xe0e0e0);
         super.drawScreen(i, j, f);
     }
 

@@ -110,7 +110,7 @@ public class Block
         return 0;
     }
 
-    protected Block setHardness(float f)
+    public Block setHardness(float f)
     {
         blockHardness = f;
         if(blockResistance < f * 5F)
