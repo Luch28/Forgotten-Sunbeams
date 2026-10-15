@@ -225,7 +225,7 @@ public class BiomeGenBase
     protected List spawnableMonsterList;
     protected List spawnableCreatureList;
     protected List spawnableWaterCreatureList;
-    private boolean enableSnow;
+    public boolean enableSnow;
     private boolean enableRain;
     private static BiomeGenBase biomeLookupTable[] = new BiomeGenBase[4096];
 

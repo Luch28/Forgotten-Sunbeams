@@ -3,78 +3,78 @@ package net.minecraft.src.forgetten_sunbeams.items;
 import net.minecraft.src.*;
 import net.minecraft.src.forgetten_sunbeams.FSItems;
 
-public class Quiver extends Item {
+public class Quiver extends ItemArmor {
 
     public static final int MAX_CAPACITY = 32;
 
     public Quiver(int id) {
-        super(id);
+        super(id, 0, 0, 1);
         this.setMaxStackSize(1);
-        this.setMaxDamage(MAX_CAPACITY);
+        this.setMaxDamage(0);
         this.setIconIndex(38);
+        this.setItemName("quiver");
     }
 
-    @Override
-    public boolean hitEntity(ItemStack itemstack, EntityLiving entityliving, EntityLiving attacker) {
-        return false;
+    public static int getArrows(ItemStack quiver) {
+        if (quiver == null) return 0;
+        int dmg = quiver.getItemDamage();
+        int arrows = MAX_CAPACITY - dmg;
+        if (arrows < 0) arrows = 0;
+        if (arrows > MAX_CAPACITY) arrows = MAX_CAPACITY;
+        return arrows;
+    }
+
+    public static void setArrows(ItemStack quiver, int amount) {
+        if (quiver == null) return;
+        if (amount < 0) amount = 0;
+        if (amount > MAX_CAPACITY) amount = MAX_CAPACITY;
+        quiver.setItemDamage(MAX_CAPACITY - amount);
     }
 
     @Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
         if (entityplayer == null || entityplayer.inventory == null) return itemstack;
-
-        ItemStack heldItem = entityplayer.inventory.getCurrentItem();
-        boolean holdingArrows = heldItem != null && heldItem.itemID == Item.arrow.shiftedIndex;
-
-        if (holdingArrows) {
-            int arrowsInQuiver = MAX_CAPACITY - itemstack.getItemDamage();
-            int spaceLeft = MAX_CAPACITY - arrowsInQuiver;
-
-            if (spaceLeft > 0) {
-                int arrowsInHand = heldItem.stackSize;
-                int amountToTransfer = entityplayer.isSneaking() ? Math.min(spaceLeft, arrowsInHand) : 1;
-
-                if (amountToTransfer > 0) {
-                    int newDamage = itemstack.getItemDamage() - amountToTransfer;
-                    if (newDamage < 0) newDamage = 0;
-
-                    itemstack.setItemDamage(newDamage);
-                    heldItem.stackSize -= amountToTransfer;
-
-                    if (heldItem.stackSize <= 0) {
-                        entityplayer.inventory.setInventorySlotContents(
-                            entityplayer.inventory.currentItem, null);
-                    }
-                    entityplayer.inventory.onInventoryChanged();
-                    world.playSoundAtEntity(entityplayer, "random.pop", 0.2F, 1.0F);
-                }
-            }
-            return itemstack;
-        }
-
         if (entityplayer.isSneaking()) {
-            int arrowsInQuiver = MAX_CAPACITY - itemstack.getItemDamage();
-            if (arrowsInQuiver > 0) {
-                ItemStack arrowStack = new ItemStack(Item.arrow, arrowsInQuiver);
+            int arrows = getArrows(itemstack);
+            if (arrows > 0) {
+                ItemStack arrowStack = new ItemStack(Item.arrow, arrows);
                 if (!entityplayer.inventory.addItemStackToInventory(arrowStack)) {
                     entityplayer.dropPlayerItem(arrowStack);
                 }
-                itemstack.setItemDamage(MAX_CAPACITY);
+                setArrows(itemstack, 0);
                 entityplayer.inventory.onInventoryChanged();
                 world.playSoundAtEntity(entityplayer, "random.pop", 0.2F, 1.0F);
             }
             return itemstack;
         }
 
-        int chestSlot = 2;
-        ItemStack currentChest = entityplayer.inventory.armorInventory[chestSlot];
+        int arrowsInQuiver = getArrows(itemstack);
+        int spaceLeft = MAX_CAPACITY - arrowsInQuiver;
+
+        if (spaceLeft > 0) {
+            for (int i = 0; i < entityplayer.inventory.mainInventory.length; i++) {
+                ItemStack slot = entityplayer.inventory.mainInventory[i];
+                if (slot != null && slot.itemID == Item.arrow.shiftedIndex) {
+                    slot.stackSize -= 1;
+                    setArrows(itemstack, arrowsInQuiver + 1);
+                    if (slot.stackSize <= 0) {
+                        entityplayer.inventory.mainInventory[i] = null;
+                    }
+                    entityplayer.inventory.onInventoryChanged();
+                    world.playSoundAtEntity(entityplayer, "random.pop", 0.2F, 1.0F);
+                    return itemstack;
+                }
+            }
+        }
+
+        ItemStack currentChest = entityplayer.inventory.armorInventory[2];
         if (currentChest == null) {
-            entityplayer.inventory.armorInventory[chestSlot] = itemstack.copy();
+            entityplayer.inventory.armorInventory[2] = itemstack.copy();
             entityplayer.inventory.setInventorySlotContents(
                 entityplayer.inventory.currentItem, null);
             entityplayer.inventory.onInventoryChanged();
             world.playSoundAtEntity(entityplayer, "random.cloth", 0.2F, 1.0F);
-            return null;
+            return itemstack;
         }
 
         return itemstack;
@@ -96,23 +96,32 @@ public class Quiver extends Item {
         return null;
     }
 
-    public static int getArrows(ItemStack quiver) {
-        if (quiver == null) return 0;
-        return MAX_CAPACITY - quiver.getItemDamage();
-    }
-
     public static boolean consumeArrow(EntityPlayer player) {
+        if (player == null || player.inventory == null) return false;
+
         ItemStack quiver = getQuiver(player);
         if (quiver != null) {
-            int arrows = MAX_CAPACITY - quiver.getItemDamage();
+            int arrows = getArrows(quiver);
             if (arrows > 0) {
-                quiver.setItemDamage(quiver.getItemDamage() + 1);
-                if (player.inventory != null) {
-                    player.inventory.onInventoryChanged();
+                setArrows(quiver, arrows - 1);
+                player.inventory.onInventoryChanged();
+                return true;
+            }
+            return false;
+        }
+
+        for (int i = 0; i < player.inventory.mainInventory.length; i++) {
+            ItemStack slot = player.inventory.mainInventory[i];
+            if (slot != null && slot.itemID == Item.arrow.shiftedIndex) {
+                slot.stackSize--;
+                if (slot.stackSize <= 0) {
+                    player.inventory.mainInventory[i] = null;
                 }
+                player.inventory.onInventoryChanged();
                 return true;
             }
         }
+
         return false;
     }
 

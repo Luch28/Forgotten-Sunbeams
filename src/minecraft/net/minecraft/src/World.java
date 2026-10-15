@@ -2015,6 +2015,7 @@ public class World
 
     public void tick()
     {
+    	net.minecraft.src.forgetten_sunbeams.ForgottenSunbeams.onWorldTick(this);
         updateWeather();
         if(isAllPlayersFullyAsleep())
         {

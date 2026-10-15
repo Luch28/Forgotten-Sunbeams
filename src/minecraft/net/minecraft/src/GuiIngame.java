@@ -285,10 +285,8 @@ public class GuiIngame extends Gui
             int sw = sr.getScaledWidth();
             int sh = sr.getScaledHeight();
 
-            int barX = (sw + 75) / 2;
-            int barY = sh - 22;
-            int iconX = barX;
-            int iconY = barY - 20;
+            int iconX = (sw / 2) + 30;
+            int iconY = sh - 50;
 
             int tex = this.mc.renderEngine.getTexture("/gui/items.png");
             this.mc.renderEngine.bindTexture(tex);

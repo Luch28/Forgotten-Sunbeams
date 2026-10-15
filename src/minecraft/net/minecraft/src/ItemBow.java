@@ -7,6 +7,8 @@ public class ItemBow extends Item {
     public ItemBow(int i) {
         super(i);
         this.maxStackSize = 1;
+        this.setItemName("bow");
+        this.setIconIndex(5);
     }
 
     @Override
@@ -14,8 +16,14 @@ public class ItemBow extends Item {
         if (entityplayer == null || entityplayer.inventory == null) return itemstack;
 
         if (!world.multiplayerWorld) {
-            boolean hasQuiverArrow = Quiver.consumeArrow(entityplayer);
+            boolean hasQuiverArrow = false;
             boolean hasRegularArrow = false;
+
+            if (Quiver.getArrows(Quiver.getQuiver(entityplayer)) > 0) {
+                if (Quiver.consumeArrow(entityplayer)) {
+                    hasQuiverArrow = true;
+                }
+            }
 
             if (!hasQuiverArrow) {
                 hasRegularArrow = entityplayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex);

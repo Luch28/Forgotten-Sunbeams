@@ -8,45 +8,57 @@ import net.minecraft.src.Item;
 public class FSRecipes {
     public static void init() {
         CraftingManager.getInstance().addRecipe(
-            new ItemStack(FSBlocks.glassTrapDoor, 2), 
-            new Object[] { 
-                "GGG", 
-                "GGG", 
-                Character.valueOf('G'), Block.glass 
+            new ItemStack(FSBlocks.glassTrapDoor, 2),
+            new Object[] {
+                "GGG",
+                "GGG",
+                Character.valueOf('G'), Block.glass
             }
         );
         
         CraftingManager.getInstance().addRecipe(
-        	    new ItemStack(FSBlocks.glassDoor, 1),
-        	    new Object[] {
-        	        "GG ",
-        	        "GG ",
-        	        "GG ",
-        	        Character.valueOf('g'), Block.glass
-        	    }
-        	);
-        
+            new ItemStack(FSBlocks.glassDoor, 3),
+            new Object[] {
+                "GG ",
+                "GG ",
+                "GG ",
+                Character.valueOf('G'), Block.glass
+            }
+        );
+
         CraftingManager.getInstance().addRecipe(
-            new ItemStack(FSItems.quiver, 1), 
-            new Object[] { 
-                "  S", 
-                "L L", 
-                "SLL", 
+            new ItemStack(FSItems.quiver, 1),
+            new Object[] {
+                "  S",
+                "L L",
+                "SLL",
                 Character.valueOf('L'), Item.leather,
                 Character.valueOf('S'), Item.silk
             }
         );
+
+        CraftingManager.getInstance().addRecipe(
+            new ItemStack(FSBlocks.dynya, 1),
+            new Object[] {
+                "DDD",
+                "DDD",
+                "DDD",
+                Character.valueOf('D'), FSItems.dynyaSlice
+            }
+        );
         
         CraftingManager.getInstance().addRecipe(
-        	    new ItemStack(FSBlocks.dynya, 1),
-        	    new Object[] {
-        	        "DDD",
-        	        "DDD",
-        	        "DDD",
-        	        Character.valueOf('D'), FSItems.dynyaSlice
-        	    }
-        	);
-        
+                new ItemStack(FSBlocks.netherReactor, 1),
+                new Object[] {
+                    "IDI",
+                    "IGI",
+                    "IDI",
+                    Character.valueOf('I'), Item.ingotIron,
+                    Character.valueOf('D'), Item.diamond,
+                    Character.valueOf('G'), Item.ingotGold,
+                }
+            );
+
         System.out.println("Recipes registered!");
     }
 }

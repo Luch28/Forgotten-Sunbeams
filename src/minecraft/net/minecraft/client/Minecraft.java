@@ -974,6 +974,10 @@ public abstract class Minecraft
         }
         if(!isGamePaused && theWorld != null)
         {
+            net.minecraft.src.forgetten_sunbeams.ForgottenSunbeams.onWorldTick(theWorld);
+        }
+        if(!isGamePaused && theWorld != null)
+        {
             playerController.updateController();
         }
         GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, renderEngine.getTexture("/terrain.png"));

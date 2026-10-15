@@ -78,7 +78,7 @@ public class CantaloupeStem extends BlockCrops {
     public boolean isOpaqueCube() {
         return false;
     }
-
+    
     public boolean renderAsNormalBlock() {
         return false;
     }
@@ -140,9 +140,5 @@ public class CantaloupeStem extends BlockCrops {
         }
 
         return f;
-    }
-
-    public int colorMultiplier(World world, int x, int y, int z) {
-    	return 0x00FF00;
     }
 }

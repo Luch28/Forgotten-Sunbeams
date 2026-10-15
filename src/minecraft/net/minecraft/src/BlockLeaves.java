@@ -39,6 +39,9 @@ public class BlockLeaves extends BlockLeavesBase
 
     public int colorMultiplier(IBlockAccess iblockaccess, int i, int j, int k)
     {
+        if (isSnowyAt(iblockaccess, i, j, k)) {
+            return 0xFFFFFF;
+        }
         int l = iblockaccess.getBlockMetadata(i, j, k);
         if((l & 1) == 1)
         {
@@ -54,6 +57,29 @@ public class BlockLeaves extends BlockLeavesBase
             double d1 = iblockaccess.getWorldChunkManager().humidity[0];
             return ColorizerFoliage.getFoliageColor(d, d1);
         }
+    }
+
+    private boolean isSnowyAt(IBlockAccess iblockaccess, int i, int j, int k)
+    {
+        World world;
+        if (iblockaccess instanceof World) {
+            world = (World) iblockaccess;
+        } else {
+            return false;
+        }
+
+        if (!world.canBlockSeeTheSky(i, j + 1, k)) {
+            return false;
+        }
+
+        BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(i, k);
+        if (biome == null || !biome.enableSnow) {
+            return false;
+        }
+
+        world.getWorldChunkManager().func_4069_a(i, k, 1, 1);
+        double temp = world.getWorldChunkManager().temperature[0];
+        return temp <= 0.15D;
     }
 
     public void onBlockRemoval(World world, int i, int j, int k)

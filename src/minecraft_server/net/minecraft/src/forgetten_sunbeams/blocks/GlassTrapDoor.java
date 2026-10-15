@@ -27,7 +27,7 @@ public class GlassTrapDoor extends BlockTrapDoor {
     public boolean isOpaqueCube() {
         return false;
     }
-    
+
     public boolean renderAsNormalBlock() {
         return false;
     }

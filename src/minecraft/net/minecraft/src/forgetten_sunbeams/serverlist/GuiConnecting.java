@@ -1,7 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
-
 package net.minecraft.src.forgetten_sunbeams.serverlist;
 
 import net.minecraft.client.Minecraft;
@@ -11,10 +7,6 @@ import net.minecraft.src.GuiScreen;
 import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.StringTranslate;
 import net.minecraft.src.ThreadConnectToServer;
-
-// Referenced classes of package net.minecraft.src:
-//            GuiScreen, ThreadConnectToServer, NetClientHandler, StringTranslate, 
-//            GuiButton, GuiMainMenu
 
 public class GuiConnecting extends GuiScreen
 {

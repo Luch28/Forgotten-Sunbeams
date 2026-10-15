@@ -60,7 +60,7 @@ public class Item
         return iconIndex;
     }
 
-    public final int getIconIndex(ItemStack itemstack)
+    public int getIconIndex(ItemStack itemstack)
     {
         return getIconFromDamage(itemstack.getItemDamage());
     }
