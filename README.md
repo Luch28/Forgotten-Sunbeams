@@ -4,7 +4,9 @@
 
 # Forgotten Sunbeams
 
-is a Minecraft Beta 1.7.3 fork designed to lure players out of the mines and encourage them to build houses and railways, while also adding a few new features and blocks.
+This is a fork of Minecraft Beta 1.7.3 designed to draw players out of the mines and encourage them to build houses and railways; it also introduces several new features and blocks.
+
+At its core, it restores removed features/blocks and expands upon the vanilla content
 
 ### The project is being developed by one person
 Don’t judge too harshly :) <img width="150" height="150" alt="1000048543" src="https://github.com/user-attachments/assets/38760ebf-f4d6-4882-a6c6-f5d95f28e421" />
