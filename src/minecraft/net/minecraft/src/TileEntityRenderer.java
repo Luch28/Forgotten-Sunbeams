@@ -15,19 +15,19 @@ import org.lwjgl.opengl.GL11;
 public class TileEntityRenderer
 {
 
-    private TileEntityRenderer()
-    {
-        specialRendererMap = new HashMap();
-        specialRendererMap.put(net.minecraft.src.TileEntitySign.class, new TileEntitySignRenderer());
-        specialRendererMap.put(net.minecraft.src.TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
-        specialRendererMap.put(net.minecraft.src.TileEntityPiston.class, new TileEntityRendererPiston());
-        TileEntitySpecialRenderer tileentityspecialrenderer;
-        for(Iterator iterator = specialRendererMap.values().iterator(); iterator.hasNext(); tileentityspecialrenderer.setTileEntityRenderer(this))
-        {
-            tileentityspecialrenderer = (TileEntitySpecialRenderer)iterator.next();
-        }
-
-    }
+	private TileEntityRenderer()
+	{
+	    specialRendererMap = new HashMap();
+	    specialRendererMap.put(net.minecraft.src.TileEntitySign.class, new TileEntitySignRenderer());
+	    specialRendererMap.put(net.minecraft.src.TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
+	    specialRendererMap.put(net.minecraft.src.TileEntityPiston.class, new TileEntityRendererPiston());
+	    specialRendererMap.put(net.minecraft.src.forgetten_sunbeams.gear.TileEntityGear.class, new net.minecraft.src.forgetten_sunbeams.util.GearRenderer());
+	    for(Iterator iterator = specialRendererMap.values().iterator(); iterator.hasNext();)
+	    {
+	        TileEntitySpecialRenderer tileentityspecialrenderer = (TileEntitySpecialRenderer)iterator.next();
+	        tileentityspecialrenderer.setTileEntityRenderer(this);
+	    }
+	}
 
     public TileEntitySpecialRenderer getSpecialRendererForClass(Class class1)
     {

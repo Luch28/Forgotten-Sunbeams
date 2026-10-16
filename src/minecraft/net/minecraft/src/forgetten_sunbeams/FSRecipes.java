@@ -58,6 +58,22 @@ public class FSRecipes {
                     Character.valueOf('G'), Item.ingotGold,
                 }
             );
+        CraftingManager.getInstance().addRecipe(
+                new ItemStack(FSItems.dynyaSeeds, 1),
+                new Object[] {
+                    "S",
+                    Character.valueOf('S'), FSItems.dynyaSlice
+                }
+            );
+
+        
+        CraftingManager.getInstance().addRecipe(
+                new ItemStack(FSBlocks.gear, 1),
+                new Object[] {
+                    "T",
+                    Character.valueOf('T'), Block.dirt
+                }
+            );
 
         System.out.println("Recipes registered!");
     }

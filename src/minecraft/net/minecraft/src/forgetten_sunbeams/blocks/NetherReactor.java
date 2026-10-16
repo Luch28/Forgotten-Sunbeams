@@ -23,8 +23,6 @@ public class NetherReactor extends Block {
 
     @Override
     public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
-        System.out.println("[DEBUG] Клик по реактору зафиксирован! Метадата: " + world.getBlockMetadata(x, y, z));
-        
         if (world.getBlockMetadata(x, y, z) == STATE_1) {
             NetherReactorAltar.tryActivate(world, x, y, z);
             return true;

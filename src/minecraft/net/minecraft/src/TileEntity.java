@@ -156,5 +156,6 @@ public class TileEntity
         addMapping(net.minecraft.src.TileEntityMobSpawner.class, "MobSpawner");
         addMapping(net.minecraft.src.TileEntityNote.class, "Music");
         addMapping(net.minecraft.src.TileEntityPiston.class, "Piston");
+        addMapping(net.minecraft.src.forgetten_sunbeams.gear.TileEntityGear.class, "Gear");
     }
 }

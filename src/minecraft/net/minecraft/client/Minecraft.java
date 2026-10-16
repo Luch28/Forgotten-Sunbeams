@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.PrintStream;
 import net.minecraft.src.*;
+import net.minecraft.src.forgetten_sunbeams.gear.GearTexture;
 import net.minecraft.src.forgetten_sunbeams.serverlist.GuiConnecting;
 
 import org.lwjgl.LWJGLException;

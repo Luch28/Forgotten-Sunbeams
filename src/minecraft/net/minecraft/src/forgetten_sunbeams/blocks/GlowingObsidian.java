@@ -1,7 +1,6 @@
 package net.minecraft.src.forgetten_sunbeams.blocks;
 
 import net.minecraft.src.BlockObsidian;
-import net.minecraft.src.Material;
 
 public class GlowingObsidian extends BlockObsidian{
 

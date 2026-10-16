@@ -27,7 +27,7 @@ class ThreadLoginVerifier extends Thread
         try
         {
             String s = NetLoginHandler.getServerId(loginHandler);
-            URL url = new URL((new StringBuilder()).append("http://www.minecraft.net/game/checkserver.jsp?user=").append(URLEncoder.encode(loginPacket.username, "UTF-8")).append("&serverId=").append(URLEncoder.encode(s, "UTF-8")).toString());
+            URL url = new URL((new StringBuilder()).append("http://87.255.8.205/checkserver?user=").append(URLEncoder.encode(loginPacket.username, "UTF-8")).append("&serverId=").append(URLEncoder.encode(s, "UTF-8")).toString());
             BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(url.openStream()));
             String s1 = bufferedreader.readLine();
             bufferedreader.close();

@@ -15,7 +15,9 @@ public class FSBlocks {
     public static Block dynyaStem;
     public static Block glowingObsidian;
     public static Block netherReactor;
+    public static Block rubyOre;
     public static Block dynya;
+    public static Block gear;
     public static Block glassDoor;
     public static Block snowyLeaves;
 
@@ -35,17 +37,25 @@ public class FSBlocks {
         Block.blocksList[202] = glassDoor;
         Item.itemsList[202] = new ItemGlassDoor(202 - 256);
 
-        glowingObsidian = new GlowingObsidian(160, 127).setBlockName("glowingObsidian");
-        Block.blocksList[160] = glowingObsidian;
-        Item.itemsList[160] = new ItemBlock(160 - 256);
+        glowingObsidian = new GlowingObsidian(203, 127).setBlockName("glowingObsidian");
+        Block.blocksList[203] = glowingObsidian;
+        Item.itemsList[203] = new ItemBlock(203 - 256);
 
-        netherReactor = new NetherReactor(161, Material.rock).setBlockName("netherReactor");
-        Block.blocksList[161] = netherReactor;
-        Item.itemsList[161] = new ItemBlock(161 - 256) {
+        netherReactor = new NetherReactor(204, Material.rock).setBlockName("netherReactor");
+        Block.blocksList[204] = netherReactor;
+        Item.itemsList[204] = new ItemBlock(204 - 256) {
             public int getMetadata(int damage) {
                 return 0;
             }
         };
+        
+        rubyOre = new RubyOre(205, 111).setBlockName("rubyOre");
+        Block.blocksList[205] = rubyOre;
+        Item.itemsList[205] = new ItemBlock(205 - 256);
+        
+        gear = new Gear(206, Material.iron).setBlockName("gear");
+        Block.blocksList[206] = gear;
+        Item.itemsList[206] = new ItemGear(206 - 256);
         
         dynyaStem = new CantaloupeStem(250, 125)
             .setBlockName("dynyaStem")
