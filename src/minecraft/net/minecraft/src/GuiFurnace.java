@@ -4,7 +4,6 @@
 
 package net.minecraft.src;
 
-import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:

@@ -21,7 +21,7 @@ public class TileEntityRenderer
 	    specialRendererMap.put(net.minecraft.src.TileEntitySign.class, new TileEntitySignRenderer());
 	    specialRendererMap.put(net.minecraft.src.TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
 	    specialRendererMap.put(net.minecraft.src.TileEntityPiston.class, new TileEntityRendererPiston());
-	    specialRendererMap.put(net.minecraft.src.forgetten_sunbeams.gear.TileEntityGear.class, new net.minecraft.src.forgetten_sunbeams.util.GearRenderer());
+	    specialRendererMap.put(net.minecraft.src.forgetten_sunbeams.gear.TileEntityGear.class, new net.minecraft.src.forgetten_sunbeams.utils.GearRenderer());
 	    for(Iterator iterator = specialRendererMap.values().iterator(); iterator.hasNext();)
 	    {
 	        TileEntitySpecialRenderer tileentityspecialrenderer = (TileEntitySpecialRenderer)iterator.next();

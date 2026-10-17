@@ -1,4 +1,4 @@
-package net.minecraft.src.forgetten_sunbeams.util;
+package net.minecraft.src.forgetten_sunbeams.utils;
 
 import net.minecraft.src.Tessellator;
 import net.minecraft.src.TileEntity;

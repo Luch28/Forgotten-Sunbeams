@@ -10,7 +10,7 @@ public class FSItems {
     public static Item ruby;
     public static Item dynyaSeeds;
     public static Item dynyaSlice;
-    public static Item glassDoorItem;
+    public static Item glassDoor;
 
     public static void init() {
         if (initialized) return;

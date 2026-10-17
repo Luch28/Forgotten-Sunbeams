@@ -14,7 +14,7 @@ public class NetherReactor extends Block {
 
     public NetherReactor(int id, Material material) {
         super(id, material);
-        this.setHardness(2.0F);
+        this.setHardness(3.0F);
         this.setResistance(6.0F);
         this.setStepSound(soundMetalFootstep);
         this.setBlockName("netherReactor");

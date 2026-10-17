@@ -1,6 +1,7 @@
 package net.minecraft.src.forgetten_sunbeams;
 
 import net.minecraft.src.Block;
+import net.minecraft.src.BlockLeaves;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.Material;
@@ -13,8 +14,10 @@ public class FSBlocks {
 
     public static Block glassTrapDoor;
     public static Block dynyaStem;
+    public static Block stonecutter;
     public static Block glowingObsidian;
     public static Block netherReactor;
+    public static Block blueRose;
     public static Block rubyOre;
     public static Block dynya;
     public static Block gear;
@@ -43,20 +46,24 @@ public class FSBlocks {
 
         netherReactor = new NetherReactor(204, Material.rock).setBlockName("netherReactor");
         Block.blocksList[204] = netherReactor;
-        Item.itemsList[204] = new ItemBlock(204 - 256) {
-            public int getMetadata(int damage) {
-                return 0;
-            }
-        };
-        
+        Item.itemsList[204] = new ItemBlock(204 - 256);
+
         rubyOre = new RubyOre(205, 111).setBlockName("rubyOre");
         Block.blocksList[205] = rubyOre;
         Item.itemsList[205] = new ItemBlock(205 - 256);
-        
+
         gear = new Gear(206, Material.iron).setBlockName("gear");
         Block.blocksList[206] = gear;
         Item.itemsList[206] = new ItemGear(206 - 256);
+
+        stonecutter = new Stonecutter(207).setBlockName("stonecutter");
+        Block.blocksList[207] = stonecutter;
+        Item.itemsList[207] = new ItemBlock(207 - 256);
         
+        blueRose = new BlueRose(208, 30).setBlockName("blueRose");
+        Block.blocksList[208] = blueRose;
+        Item.itemsList[208] = new ItemBlock(208 - 256);
+
         dynyaStem = new CantaloupeStem(250, 125)
             .setBlockName("dynyaStem")
             .setHardness(0.0F);

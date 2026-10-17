@@ -3,6 +3,8 @@ package net.minecraft.src.forgetten_sunbeams.blocks;
 import net.minecraft.src.BlockLeaves;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
+import net.minecraft.src.WorldInfo;
+import net.minecraft.src.BiomeGenBase;
 
 public class SnowyLeaves extends BlockLeaves {
 
@@ -14,44 +16,36 @@ public class SnowyLeaves extends BlockLeaves {
     public int colorMultiplier(IBlockAccess iba, int x, int y, int z) {
         if (iba instanceof World) {
             World world = (World) iba;
-            if (world.getWorldInfo().getRaining()) {
-                float snowProgress = getSnowProgress(world);
-                if (snowProgress >= 1.0F) {
-                    return 16777215;
+            WorldInfo info = world.getWorldInfo();
+            if (info.getRaining()) {
+                BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
+                if (biome != null && biome.enableSnow) {
+                    float t = getSnowProgress(info);
+                    t = Math.round(t * 4.0F) / 4.0F;
+                    if (t > 0.0F) {
+                        int base = super.colorMultiplier(iba, x, y, z);
+                        return lerpColor(base, 0xFFFFFF, t);
+                    }
                 }
-                int baseColor = super.colorMultiplier(iba, x, y, z);
-                return lerpColor(baseColor, 16777215, snowProgress);
             }
         }
         return super.colorMultiplier(iba, x, y, z);
     }
 
-    private float getSnowProgress(World world) {
-        long time = world.getWorldTime() % 24000L;
-        if (time >= 12000L && time < 13000L) {
-            return (float)(time - 12000L) / 1000.0F;
-        }
-        if (time >= 13000L && time < 23000L) {
-            return 1.0F;
-        }
-        if (time >= 23000L && time < 24000L) {
-            return 1.0F - (float)(time - 23000L) / 1000.0F;
-        }
-        return 0.0F;
+    private float getSnowProgress(WorldInfo info) {
+        int rainTime = info.getRainTime();
+        float t = 1.0F - Math.min(rainTime, 6000) / 6000.0F;
+        if (t < 0.0F) t = 0.0F;
+        if (t > 1.0F) t = 1.0F;
+        return t;
     }
 
     private int lerpColor(int from, int to, float t) {
-        int fr = (from >> 16) & 0xFF;
-        int fg = (from >> 8) & 0xFF;
-        int fb = from & 0xFF;
-        int tr = (to >> 16) & 0xFF;
-        int tg = (to >> 8) & 0xFF;
-        int tb = to & 0xFF;
-
+        int fr = (from >> 16) & 0xFF, fg = (from >> 8) & 0xFF, fb = from & 0xFF;
+        int tr = (to >> 16) & 0xFF, tg = (to >> 8) & 0xFF, tb = to & 0xFF;
         int r = (int)(fr + (tr - fr) * t);
         int g = (int)(fg + (tg - fg) * t);
         int b = (int)(fb + (tb - fb) * t);
-
         return (r << 16) | (g << 8) | b;
     }
 }

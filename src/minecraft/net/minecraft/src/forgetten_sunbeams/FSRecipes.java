@@ -65,10 +65,20 @@ public class FSRecipes {
                     Character.valueOf('S'), FSItems.dynyaSlice
                 }
             );
+        
+        CraftingManager.getInstance().addRecipe(
+                new ItemStack(FSBlocks.stonecutter, 1),
+                new Object[] {
+                    "CC",
+                    "SS",
+                    Character.valueOf('C'), Block.cobblestone,
+                    Character.valueOf('S'), Block.stone
+                }
+            );
 
         
         CraftingManager.getInstance().addRecipe(
-                new ItemStack(FSBlocks.gear, 1),
+                new ItemStack(FSBlocks.blueRose, 1),
                 new Object[] {
                     "T",
                     Character.valueOf('T'), Block.dirt
