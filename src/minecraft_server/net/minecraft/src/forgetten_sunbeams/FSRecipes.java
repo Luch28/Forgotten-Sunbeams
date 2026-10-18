@@ -1,5 +1,6 @@
 package net.minecraft.src.forgetten_sunbeams;
 
+import net.minecraft.src.BlockFlower;
 import net.minecraft.src.CraftingManager;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Block;
@@ -56,6 +57,40 @@ public class FSRecipes {
                     Character.valueOf('I'), Item.ingotIron,
                     Character.valueOf('D'), Item.diamond,
                     Character.valueOf('G'), Item.ingotGold,
+                }
+            );
+        CraftingManager.getInstance().addRecipe(
+                new ItemStack(FSItems.dynyaSeeds, 1),
+                new Object[] {
+                    "S",
+                    Character.valueOf('S'), FSItems.dynyaSlice
+                }
+            );
+        
+        CraftingManager.getInstance().addRecipe(
+                new ItemStack(FSBlocks.stonecutter, 1),
+                new Object[] {
+                    "CC",
+                    "SS",
+                    Character.valueOf('C'), Block.cobblestone,
+                    Character.valueOf('S'), Block.stone
+                }
+            );
+        
+        CraftingManager.getInstance().addRecipe(
+                new ItemStack(FSBlocks.dynya, 1),
+                new Object[] {
+                    "RRR",
+                    "RRR",
+                    "RRR",
+                    Character.valueOf('R'), FSItems.ruby                }
+            );
+        
+        CraftingManager.getInstance().addRecipe(
+                new ItemStack(FSBlocks.blueRose, 1),
+                new Object[] {
+                    "B",
+                    Character.valueOf('F'), Block.dirt
                 }
             );
 

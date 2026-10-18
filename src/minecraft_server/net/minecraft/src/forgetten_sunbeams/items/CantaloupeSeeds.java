@@ -1,7 +1,6 @@
 package net.minecraft.src.forgetten_sunbeams.items;
 
 import net.minecraft.src.*;
-import net.minecraft.src.forgetten_sunbeams.FSBlocks;
 
 public class CantaloupeSeeds extends Item {
 

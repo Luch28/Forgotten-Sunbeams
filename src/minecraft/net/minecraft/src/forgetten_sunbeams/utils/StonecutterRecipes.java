@@ -32,18 +32,14 @@ public class StonecutterRecipes {
         }
         return null;
     }
-
+    
     public static void registerDefaults() {
         addRecipe(new ItemStack(Block.cobblestone, 1),
-                new ItemStack(Block.stairSingle, 1, 0),
-                new ItemStack(Block.stone, 1));
+                new ItemStack(Block.stairSingle, 1, 0));
 
         addRecipe(new ItemStack(Block.stone, 1),
-                new ItemStack(Block.stairSingle, 1, 3),
-                new ItemStack(Block.stairSingle, 1, 3),
-                new ItemStack(Block.stairSingle, 1, 3),
-                new ItemStack(Block.stairSingle, 1, 3),
-                new ItemStack(Block.stairSingle, 1, 3),
-                new ItemStack(Block.stairSingle, 1, 3));
+                new ItemStack(Block.button, 6, 0),
+                new ItemStack(Block.pressurePlateStone, 4, 0),
+                new ItemStack(Block.stairSingle, 2, 0));
     }
 }

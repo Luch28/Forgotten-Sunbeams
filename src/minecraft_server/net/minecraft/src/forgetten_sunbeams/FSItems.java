@@ -7,9 +7,10 @@ public class FSItems {
     private static boolean initialized = false;
 
     public static Item quiver;
+    public static Item ruby;
     public static Item dynyaSeeds;
     public static Item dynyaSlice;
-    public static Item glassDoorItem;
+    public static Item glassDoor;
 
     public static void init() {
         if (initialized) return;
@@ -23,5 +24,9 @@ public class FSItems {
 
         dynyaSlice = new CantaloupeSlice(302, 1, false);
         Item.itemsList[302] = dynyaSlice;
+        
+        ruby = new Ruby(303);
+        Item.itemsList[303] = ruby;
+        
     }
 }

@@ -4,9 +4,6 @@ package net.minecraft.src.forgetten_sunbeams.plants;
 import java.util.Random;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
 import net.minecraft.src.forgetten_sunbeams.FSBlocks;

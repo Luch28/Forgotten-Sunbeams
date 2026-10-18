@@ -20,7 +20,6 @@ public class ForgottenSunbeams {
     }
 
     public static void onWorldTick(World world) {
-        SnowyLeavesHandler.onWorldTick(world);
         NetherReactorAltar.onWorldTick(world);
     }
 }

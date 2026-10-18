@@ -14,7 +14,7 @@ public class ItemGlassDoor extends Item {
         this.setItemName("glassDoor");
         this.setMaxDamage(0);
         this.setHasSubtypes(false);
-        this.setIconIndex(172);
+        this.setIconIndex(253);
         this.maxStackSize = 1;
     }
 

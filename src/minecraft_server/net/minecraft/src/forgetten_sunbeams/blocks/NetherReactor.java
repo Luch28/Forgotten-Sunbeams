@@ -14,7 +14,7 @@ public class NetherReactor extends Block {
 
     public NetherReactor(int id, Material material) {
         super(id, material);
-        this.setHardness(2.0F);
+        this.setHardness(3.0F);
         this.setResistance(6.0F);
         this.setStepSound(soundMetalFootstep);
         this.setBlockName("netherReactor");
@@ -23,8 +23,6 @@ public class NetherReactor extends Block {
 
     @Override
     public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
-        System.out.println("[DEBUG] Клик по реактору зафиксирован! Метадата: " + world.getBlockMetadata(x, y, z));
-        
         if (world.getBlockMetadata(x, y, z) == STATE_1) {
             NetherReactorAltar.tryActivate(world, x, y, z);
             return true;

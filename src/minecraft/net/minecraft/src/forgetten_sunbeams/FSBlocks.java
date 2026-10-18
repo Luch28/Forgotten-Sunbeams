@@ -1,11 +1,11 @@
 package net.minecraft.src.forgetten_sunbeams;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.BlockLeaves;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.Material;
 import net.minecraft.src.forgetten_sunbeams.blocks.*;
+import net.minecraft.src.forgetten_sunbeams.blocks.Ruby;
 import net.minecraft.src.forgetten_sunbeams.items.*;
 import net.minecraft.src.forgetten_sunbeams.plants.*;
 
@@ -20,6 +20,7 @@ public class FSBlocks {
     public static Block blueRose;
     public static Block rubyOre;
     public static Block dynya;
+    public static Block ruby;
     public static Block gear;
     public static Block glassDoor;
     public static Block snowyLeaves;
@@ -63,6 +64,10 @@ public class FSBlocks {
         blueRose = new BlueRose(208, 30).setBlockName("blueRose");
         Block.blocksList[208] = blueRose;
         Item.itemsList[208] = new ItemBlock(208 - 256);
+        
+        ruby = new Ruby(209, Material.rock).setBlockName("ruby");
+        Block.blocksList[209] = ruby;
+        Item.itemsList[209] = new ItemBlock(209 - 256);
 
         dynyaStem = new CantaloupeStem(250, 125)
             .setBlockName("dynyaStem")

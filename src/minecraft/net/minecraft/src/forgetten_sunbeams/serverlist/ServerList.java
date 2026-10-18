@@ -11,6 +11,12 @@ import java.util.List;
 public class ServerList {
     private List<ServerData> servers = new ArrayList<ServerData>();
     private File serverListFile;
+    
+    public static final int MAX_SERVERS = 5;
+    
+    public boolean isFull() {
+        return servers.size() >= MAX_SERVERS;
+    }
 
     @SuppressWarnings("static-access")
 	public ServerList(net.minecraft.client.Minecraft mc) {
@@ -65,6 +71,7 @@ public class ServerList {
     }
 
     public void addServer(String name, String ip) {
+        if (isFull()) return;
         servers.add(new ServerData(name, ip, 0L));
         saveServerList();
     }

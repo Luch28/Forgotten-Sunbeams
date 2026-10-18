@@ -290,7 +290,7 @@ public class NetherReactorAltar {
     private static void setNetherrack(World world, int bx, int by, int bz) {
         int currentID = world.getBlockId(bx, by, bz);
         if (currentID == 0 || currentID == Block.stone.blockID || currentID == Block.blockGold.blockID) {
-            world.setBlockWithNotify(bx, by, bz, 87);
+            world.setBlockWithNotify(bx, by, bz, Block.bloodStone.blockID);
         }
     }
 
@@ -317,7 +317,7 @@ public class NetherReactorAltar {
                 int bx = x + dx;
                 int bz = z + dz;
                 int id = world.getBlockId(bx, by, bz);
-                if (id == 87 || id == Block.stone.blockID || id == Block.cobblestone.blockID) {
+                if (id == Block.bloodStone.blockID || id == Block.stone.blockID || id == Block.cobblestone.blockID) {
                     world.setBlockWithNotify(bx, by, bz, FSBlocks.glowingObsidian.blockID);
                 }
             }
@@ -337,7 +337,7 @@ public class NetherReactorAltar {
         			int by = y + dy;
         			int bz = z + dz;int bid = world.getBlockId(bx, by, bz);
 
-        			if (bid == FSBlocks.netherReactor.blockID || bid == 87) {
+                    if (bid == FSBlocks.netherReactor.blockID || bid == Block.bloodStone.blockID) {
                         world.setBlockWithNotify(bx, by, bz, Block.obsidian.blockID);
                     }
                 }

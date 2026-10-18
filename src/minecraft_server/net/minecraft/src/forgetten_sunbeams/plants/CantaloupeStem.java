@@ -7,6 +7,8 @@ import net.minecraft.src.forgetten_sunbeams.FSItems;
 
 public class CantaloupeStem extends BlockCrops {
 
+    private static final String LOG = "[DynyaStem] ";
+
     public CantaloupeStem(int id, int textureIndex) {
         super(id, textureIndex);
         this.setStepSound(Block.soundGrassFootstep);
@@ -15,23 +17,24 @@ public class CantaloupeStem extends BlockCrops {
 
     @Override
     public int getBlockTextureFromSideAndMetadata(int side, int meta) {
-        if (meta >= 7) {
-            return 127;
+        if (meta >= 6) {
+            return 159;
         }
-        return 126;
+        return 153 + meta;
     }
 
     @Override
     public void updateTick(World world, int x, int y, int z, Random random) {
         super.updateTick(world, x, y, z, random);
 
-        if (world.getBlockLightValue(x, y + 1, z) < 9) {
+        int meta = world.getBlockMetadata(x, y, z);
+
+        int light = world.getBlockLightValue(x, y + 1, z);
+        if (light < 9) {
             return;
         }
 
-        int meta = world.getBlockMetadata(x, y, z);
-
-        if (meta < 7) {
+        if (meta < 6) {
             float growthRate = this.getGrowthRate(world, x, y, z);
             if (random.nextInt((int)(2500.0F / growthRate) + 1) == 0) {
                 world.setBlockMetadataWithNotify(x, y, z, meta + 1);
@@ -43,31 +46,82 @@ public class CantaloupeStem extends BlockCrops {
             return;
         }
 
+        tryGrowFruit(world, x, y, z, random);
+    }
+
+    private boolean tryGrowFruit(World world, int x, int y, int z, Random random) {
         int[] directions = {2, 3, 4, 5};
-        int dir = directions[random.nextInt(directions.length)];
 
-        int dx = x;
-        int dz = z;
+        for (int i = 0; i < 4; i++) {
+            int dir = directions[i];
+            int dx = x;
+            int dz = z;
 
-        switch (dir) {
-            case 2: dz--; break;
-            case 3: dz++; break;
-            case 4: dx--; break;
-            case 5: dx++; break;
+            switch (dir) {
+                case 2: dz--; break;
+                case 3: dz++; break;
+                case 4: dx--; break;
+                case 5: dx++; break;
+            }
+
+            if (!world.isAirBlock(dx, y, dz)) {
+                continue;
+            }
+
+            int groundId = world.getBlockId(dx, y - 1, dz);
+            if (groundId != Block.dirt.blockID
+                    && groundId != Block.grass.blockID
+                    && groundId != Block.tilledField.blockID) {
+                continue;
+            }
+
+            world.setBlockWithNotify(dx, y, dz, FSBlocks.dynya.blockID);
+            world.setBlockMetadataWithNotify(x, y, z, 6 | (dir << 3));
+            System.out.println(LOG + "FRUIT PLACED at " + dx + "," + y + "," + dz
+                    + " dir=" + dir + " stem meta=" + (6 | (dir << 3)));
+            return true;
         }
 
-        if (!world.isAirBlock(dx, y, dz)) {
-            return;
+        return false;
+    }
+
+    @Override
+    public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+        ItemStack held = player.inventory.getCurrentItem();
+        if (held == null || held.itemID != Item.dyePowder.shiftedIndex) {
+            return false;
+        }
+        if (held.getItemDamage() != 15) {
+            return false;
         }
 
-        int groundId = world.getBlockId(dx, y - 1, dz);
-        if (groundId != Block.dirt.blockID
-                && groundId != Block.grass.blockID
-                && groundId != Block.tilledField.blockID) {
-            return;
+        int meta = world.getBlockMetadata(x, y, z);
+        int stage = meta & 7;
+
+        if (stage >= 6) {
+            return false;
         }
 
-        world.setBlockWithNotify(dx, y, dz, FSBlocks.dynya.blockID);
+        int add = 1 + world.rand.nextInt(2);
+        int newStage = Math.min(6, stage + add);
+        int newMeta = (meta & ~7) | newStage;
+        world.setBlockMetadataWithNotify(x, y, z, newMeta);
+
+        if (newStage >= 6) {
+            tryGrowFruit(world, x, y, z, world.rand);
+        }
+
+        world.playSoundAtEntity(player, "random.pop", 0.3F, 1.2F);
+        for (int i = 0; i < 6; i++) {
+            world.spawnParticle("happyVillager",
+                x + world.rand.nextDouble(),
+                y + 0.5D + world.rand.nextDouble() * 0.5D,
+                z + world.rand.nextDouble(),
+                0.0D, 0.0D, 0.0D);
+        }
+
+        held.stackSize--;
+        return true;
     }
 
     public int getRenderType() {
@@ -78,7 +132,7 @@ public class CantaloupeStem extends BlockCrops {
     public boolean isOpaqueCube() {
         return false;
     }
-    
+
     public boolean renderAsNormalBlock() {
         return false;
     }

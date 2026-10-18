@@ -5,6 +5,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.Material;
 import net.minecraft.src.forgetten_sunbeams.blocks.*;
+import net.minecraft.src.forgetten_sunbeams.blocks.Ruby;
 import net.minecraft.src.forgetten_sunbeams.items.*;
 import net.minecraft.src.forgetten_sunbeams.plants.*;
 
@@ -13,9 +14,14 @@ public class FSBlocks {
 
     public static Block glassTrapDoor;
     public static Block dynyaStem;
+    public static Block stonecutter;
     public static Block glowingObsidian;
     public static Block netherReactor;
+    public static Block blueRose;
+    public static Block rubyOre;
     public static Block dynya;
+    public static Block ruby;
+    public static Block gear;
     public static Block glassDoor;
     public static Block snowyLeaves;
 
@@ -35,18 +41,34 @@ public class FSBlocks {
         Block.blocksList[202] = glassDoor;
         Item.itemsList[202] = new ItemGlassDoor(202 - 256);
 
-        glowingObsidian = new GlowingObsidian(160, 127).setBlockName("glowingObsidian");
-        Block.blocksList[160] = glowingObsidian;
-        Item.itemsList[160] = new ItemBlock(160 - 256);
+        glowingObsidian = new GlowingObsidian(203, 127).setBlockName("glowingObsidian");
+        Block.blocksList[203] = glowingObsidian;
+        Item.itemsList[203] = new ItemBlock(203 - 256);
 
-        netherReactor = new NetherReactor(161, Material.rock).setBlockName("netherReactor");
-        Block.blocksList[161] = netherReactor;
-        Item.itemsList[161] = new ItemBlock(161 - 256) {
-            public int getMetadata(int damage) {
-                return 0;
-            }
-        };
+        netherReactor = new NetherReactor(204, Material.rock).setBlockName("netherReactor");
+        Block.blocksList[204] = netherReactor;
+        Item.itemsList[204] = new ItemBlock(204 - 256);
+
+        rubyOre = new RubyOre(205, 111).setBlockName("rubyOre");
+        Block.blocksList[205] = rubyOre;
+        Item.itemsList[205] = new ItemBlock(205 - 256);
+
+        gear = new Gear(206, Material.iron).setBlockName("gear");
+        Block.blocksList[206] = gear;
+        Item.itemsList[206] = new ItemGear(206 - 256);
+
+        stonecutter = new Stonecutter(207).setBlockName("stonecutter");
+        Block.blocksList[207] = stonecutter;
+        Item.itemsList[207] = new ItemBlock(207 - 256);
         
+        blueRose = new BlueRose(208, 30).setBlockName("blueRose");
+        Block.blocksList[208] = blueRose;
+        Item.itemsList[208] = new ItemBlock(208 - 256);
+        
+        ruby = new Ruby(209, Material.rock).setBlockName("ruby");
+        Block.blocksList[209] = ruby;
+        Item.itemsList[209] = new ItemBlock(209 - 256);
+
         dynyaStem = new CantaloupeStem(250, 125)
             .setBlockName("dynyaStem")
             .setHardness(0.0F);

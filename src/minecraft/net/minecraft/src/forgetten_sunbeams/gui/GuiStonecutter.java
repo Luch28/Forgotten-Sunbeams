@@ -12,7 +12,7 @@ class ContainerStonecutter extends Container {
     public ContainerStonecutter(InventoryPlayer playerInv, TileEntityStonecutter tile) {
         this.tile = tile;
 
-        this.addSlot(new Slot(tile, 0, 14, 35));
+        this.addSlot(new Slot(tile, 0, 15, 35));
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 5; col++) {
@@ -20,7 +20,8 @@ class ContainerStonecutter extends Container {
                 this.addSlot(new Slot(tile, index, 44 + col * 18, 17 + row * 18) {
                     @Override
                     public boolean isItemValid(ItemStack stack) { return false; }
-                    public boolean canTakeStack(EntityPlayer player) { return false; }
+                    @SuppressWarnings("unused")
+					public boolean canTakeStack(EntityPlayer player) { return false; }
                 });
             }
         }
