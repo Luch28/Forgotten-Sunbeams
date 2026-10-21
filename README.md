@@ -11,3 +11,4 @@ At its core, it restores removed features/blocks and expands upon the vanilla co
 ### The project is being developed by one person
 Don’t judge too harshly :) <img width="150" height="150" src="https://github.com/user-attachments/assets/38760ebf-f4d6-4882-a6c6-f5d95f28e421" />
 
+For now, I’m occupied with an `Eternal winter`
